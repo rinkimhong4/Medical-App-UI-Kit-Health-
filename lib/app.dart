@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme,
-      initialRoute: RouteView.home.name,
+      initialRoute: RouteView.splash.name,
       getPages: AppRouting.route,
     );
   }

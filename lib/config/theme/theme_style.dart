@@ -7,7 +7,7 @@ class AppTheme {
 
   static const MaterialColor primarySwatch =
       MaterialColor(_primarySwatchPrimaryValue, <int, Color>{
-        50: Color(0xFFebffff),
+        50: Color(0xFFE9F6FE),
         100: Color(0xFFcefdff),
         200: Color(0xFFa2f8ff),
         300: Color(0xFF63f0fd),

@@ -47,10 +47,21 @@ class AppImage extends StatelessWidget {
   }
 }
 
+//  usage AppImage(AppAssets.logo, width: 100, height: 100),
 class AppAssets {
-  static const String logo = 'assets/logo/logo.png';
-  static const String logo2 = 'https://example.com/pic.png';
-  static const String logo3 = 'assets/icons/icon.svg';
-  static const String logo4 = 'https://example.com/icon.svg';
-  //  usage AppImage(AppAssets.logo, width: 100, height: 100),
+  // logo
+  static const String logo1 = 'assets/logo/logo_1.png';
+  static const String logo2 = 'assets/logo/logo_2.png';
+  // bottom navigation icons
+  static const String homeOutline = 'assets/icons/Home_outline.png';
+  static const String homeFill = 'assets/icons/home_fill.png';
+  static const String profileOutline = 'assets/icons/UserProfile_outline.png';
+  static const String profileFill = 'assets/icons/user_fill.png';
+  static const String bookingOutline = 'assets/icons/Booking_outline.png';
+  static const String bookingFill = 'assets/icons/booking_fill.png';
+  static const String messageOutline = 'assets/icons/Messages_outline.png';
+  static const String messageFill = 'assets/icons/message_fill.png';
+  static const String onboarding1 = 'assets/images/onborading1.png';
+  static const String onboarding2 = 'assets/images/onboarding2.png';
+  static const String onboarding3 = 'assets/images/onboarding3.png';
 }

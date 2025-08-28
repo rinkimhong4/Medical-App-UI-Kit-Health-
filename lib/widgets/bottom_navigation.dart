@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_app/config/app_asset/app_assets.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
@@ -13,25 +14,35 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, IconData>> iconList = [
-      {'active': Icons.home_filled, 'inactive': Icons.home_outlined},
-      {'active': Icons.bookmark, 'inactive': Icons.bookmark_border},
-      {'active': Icons.notifications, 'inactive': Icons.notifications_none},
-      {'active': Icons.person, 'inactive': Icons.person_outline},
+    final List<Map<String, Widget>> iconList = [
+      {
+        'active': AppImage(AppAssets.homeFill),
+        'inactive': AppImage(AppAssets.homeOutline),
+      },
+      {
+        'active': AppImage(AppAssets.messageFill),
+        'inactive': AppImage(AppAssets.messageOutline),
+      },
+      {
+        'active': AppImage(AppAssets.profileFill),
+        'inactive': AppImage(AppAssets.profileOutline),
+      },
+      {
+        'active': AppImage(AppAssets.bookingFill),
+        'inactive': AppImage(AppAssets.bookingOutline),
+      },
     ];
 
     return Container(
-      height: 76,
+      height: 70,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppTheme.primarySwatch, AppTheme.secondarySwatch],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: const BorderRadius.horizontal(
-          left: Radius.circular(30),
-          right: Radius.circular(30),
-        ),
+        color: AppTheme.primarySwatch[50],
+        // Optional gradient example:
+        // gradient: LinearGradient(
+        //   colors: [AppTheme.primarySwatch.shade200, AppTheme.secondarySwatch.shade200],
+        //   begin: Alignment.topLeft,
+        //   end: Alignment.bottomRight,
+        // ),
       ),
       child: Column(
         children: [
@@ -42,12 +53,18 @@ class CustomBottomNavBar extends StatelessWidget {
               final bool isActive = selectedIndex == index;
               return GestureDetector(
                 onTap: () => onTap?.call(index),
-                child: Icon(
-                  isActive
-                      ? iconList[index]['active']!
-                      : iconList[index]['inactive']!,
-                  size: 28,
-                  color: Colors.white,
+                child: SizedBox(
+                  height: 28,
+                  width: 28,
+                  child: ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      isActive ? AppTheme.primarySwatch : Color(0xFF00BBD3),
+                      BlendMode.srcIn,
+                    ),
+                    child: isActive
+                        ? iconList[index]['active']!
+                        : iconList[index]['inactive']!,
+                  ),
                 ),
               );
             }),
