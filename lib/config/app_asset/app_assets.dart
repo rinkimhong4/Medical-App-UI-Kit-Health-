@@ -64,4 +64,7 @@ class AppAssets {
   static const String onboarding1 = 'assets/images/onborading1.png';
   static const String onboarding2 = 'assets/images/onboarding2.png';
   static const String onboarding3 = 'assets/images/onboarding3.png';
+  // social media icons
+  static const String facebook = 'assets/icons/facebook.png';
+  static const String google = 'assets/icons/google.png';
 }

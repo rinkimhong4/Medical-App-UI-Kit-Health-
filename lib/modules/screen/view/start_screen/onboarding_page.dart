@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:medical_app/config/app_asset/app_assets.dart';
 import 'package:medical_app/config/routes/app_routes.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-/// Onboarding page entry
 class OnboardingPage1 extends StatelessWidget {
   const OnboardingPage1({super.key});
 
@@ -32,19 +33,27 @@ class OnboardingPage1 extends StatelessWidget {
             bgColor: AppTheme.primarySwatch,
           ),
         ],
-        onSkip: () {
-          // RouteView.home.go(clearAll: true);
+        onSkip: () async {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('seen_onboarding', true);
           RouteView.signin.go(clearAll: true);
         },
-        onFinish: () {
-          RouteView.home.go(clearAll: true);
+        onFinish: () async {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('seen_onboarding', true);
+
+          final session = Supabase.instance.client.auth.currentSession;
+          if (session != null) {
+            RouteView.home.go(clearAll: true);
+          } else {
+            RouteView.signin.go(clearAll: true);
+          }
         },
       ),
     );
   }
 }
 
-/// Presenter for the onboarding pages
 class OnboardingPagePresenter extends StatefulWidget {
   final List<OnboardingPageModel> pages;
   final VoidCallback? onSkip;
@@ -75,7 +84,6 @@ class _OnboardingPagePresenterState extends State<OnboardingPagePresenter> {
         child: SafeArea(
           child: Column(
             children: [
-              // PageView for images + texts
               Expanded(
                 child: PageView.builder(
                   controller: _pageController,
@@ -91,20 +99,18 @@ class _OnboardingPagePresenterState extends State<OnboardingPagePresenter> {
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
                         children: [
-                          // Image section
                           Flexible(
                             flex: 3,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                 vertical: 24.0,
                               ),
-                              child: AppImage(
+                              child: Image.asset(
                                 item.imageUrl,
                                 fit: BoxFit.contain,
                               ),
                             ),
                           ),
-                          // Text section
                           Flexible(
                             flex: 2,
                             child: Column(
@@ -135,7 +141,6 @@ class _OnboardingPagePresenterState extends State<OnboardingPagePresenter> {
                   },
                 ),
               ),
-
               // Page indicators
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -155,7 +160,6 @@ class _OnboardingPagePresenterState extends State<OnboardingPagePresenter> {
                   }),
                 ),
               ),
-
               // Bottom buttons
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -223,7 +227,6 @@ class _OnboardingPagePresenterState extends State<OnboardingPagePresenter> {
   }
 }
 
-/// Model class for each onboarding page
 class OnboardingPageModel {
   final String title;
   final String description;

@@ -23,10 +23,12 @@ dependencies:
   path_provider: ^2.1.1
   cached_network_image: ^3.4.1
   shimmer: ^3.0.0
-  flutter_dotenv: ^5.2.1
+  flutter_dotenv: ^6.0.0
   flutter_awesome_icon: ^0.0.1
   flutter_svg: ^2.2.0
   another_flutter_splash_screen: ^1.2.1
+  supabase_flutter: ^2.10.0
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -41,3 +43,4 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/logo/
+    - .env

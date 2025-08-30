@@ -31,13 +31,25 @@ class AppRouting {
       case RouteView.signin:
         return GetPage(
           name: "/${e.name}",
-          page: () => SingInScreen(),
+          page: () => SignInScreen(),
           // binding: OnboardingBinding(),
         );
       case RouteView.signup:
         return GetPage(
           name: "/${e.name}",
-          page: () => SingUpScreen(),
+          page: () => SignUpScreen(),
+          // binding: OnboardingBinding(),
+        );
+      case RouteView.forgotPassword:
+        return GetPage(
+          name: "/${e.name}",
+          page: () => ForgotPasswordScreen(),
+          // binding: OnboardingBinding(),
+        );
+      case RouteView.verifyEmail:
+        return GetPage(
+          name: "/${e.name}",
+          page: () => VerifyEmailScreen(),
           // binding: OnboardingBinding(),
         );
     }

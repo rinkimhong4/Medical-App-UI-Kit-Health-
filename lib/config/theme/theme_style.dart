@@ -242,7 +242,9 @@ class AppColors {
   AppColors._();
 
   static const background = Color(0xFFF5F7FA);
+  static const backgroundText = Color(0xFFE9F6FE);
   static const Color cardShadow = Colors.black12;
+  static const Color black = Colors.black;
   static const blur = Color(0xFFe1ecff);
   static var splash = const Color(0xFF063455);
   static var redColor = const Color.fromARGB(255, 175, 12, 0);
