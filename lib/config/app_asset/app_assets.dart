@@ -67,4 +67,9 @@ class AppAssets {
   // social media icons
   static const String facebook = 'assets/icons/facebook.png';
   static const String google = 'assets/icons/google.png';
+  static const String doctor = 'assets/icons/Doctors.png';
+  static const String favorite = 'assets/icons/favorite.png';
+  static const String pharmacy = 'assets/icons/Pharmacy.png';
+  static const String record = 'assets/icons/record.png';
+  static const String specialties = 'assets/icons/Specialties.png';
 }
