@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:medical_app/config/app_asset/app_assets.dart';
+import 'package:get/get.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
+import 'package:medical_app/modules/screen/controller/home/home_controller.dart';
+import 'package:medical_app/modules/screen/models/top_banner_models.dart';
 
 class TopBannerScreen extends StatefulWidget {
   const TopBannerScreen({super.key});
@@ -13,6 +14,7 @@ class TopBannerScreen extends StatefulWidget {
 
 class _TopBannerScreenState extends State<TopBannerScreen> {
   final CarouselController controller = CarouselController(initialItem: 1);
+  final HomeController homeController = Get.find<HomeController>();
 
   @override
   void dispose() {
@@ -28,20 +30,28 @@ class _TopBannerScreenState extends State<TopBannerScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        // Main carousel
-        ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: height * 0.27),
-          child: CarouselView.weighted(
-            controller: controller,
-            itemSnapping: true,
-            flexWeights: const <int>[1, 7, 1],
-            children: ImageInfo.values
-                .map((ImageInfo image) => HeroLayoutCard(imageInfo: image))
-                .toList(),
-          ),
-        ),
+        // Main carousel using HomeController banners
+        Obx(() {
+          if (homeController.loadingBanners.value) {
+            return SizedBox(
+              height: height * 0.27,
+              child: Center(child: CircularProgressIndicator()),
+            );
+          }
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: height * 0.27),
+            child: CarouselView.weighted(
+              controller: controller,
+              itemSnapping: true,
+              flexWeights: const <int>[1, 7, 1],
+              children: homeController.banners
+                  .map((banner) => HeroLayoutCard(banner: banner))
+                  .toList(),
+            ),
+          );
+        }),
 
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         // Mini carousel (categories)
         Padding(
           padding: const EdgeInsets.only(left: 20.0, bottom: 10, right: 20),
@@ -50,7 +60,7 @@ class _TopBannerScreenState extends State<TopBannerScreen> {
             children: [
               Text(
                 'Categories',
-                style: AppTextStyle.bold14(color: AppColors.black),
+                style: AppTextStyle.bold16(color: AppColors.black),
               ),
               Text(
                 'See all',
@@ -59,61 +69,65 @@ class _TopBannerScreenState extends State<TopBannerScreen> {
             ],
           ),
         ),
-        Container(
-          height: 70,
-          width: width,
-          decoration: const BoxDecoration(color: Colors.transparent),
-          clipBehavior: Clip.none,
-          child: CarouselView.weighted(
-            flexWeights: const <int>[2, 3, 3, 3, 2],
-            consumeMaxWeight: false,
-            children: CategoryInfo.categoriesInfo.map((category) {
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 4),
-                decoration: BoxDecoration(
-                  color: AppTheme.secondarySwatch.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        // child: Icon(
-                        //   category.icon,
-                        //   color: AppTheme.primarySwatch[700],
-                        // ),
-                        child: Image.asset(
-                          category.assetPath,
-                          color: AppTheme.primarySwatch[700],
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Expanded(
-                        child: Text(
-                          category.title,
-                          style: AppTextStyle.bold12(
+        Obx(() {
+          if (homeController.loadingCategories.value) {
+            return SizedBox(
+              height: 70,
+              child: Center(child: CircularProgressIndicator()),
+            );
+          }
+          return Container(
+            height: 70,
+            width: width,
+            decoration: const BoxDecoration(color: Colors.transparent),
+            clipBehavior: Clip.none,
+            child: CarouselView.weighted(
+              flexWeights: const <int>[2, 3, 3, 3, 2],
+              consumeMaxWeight: false,
+              children: homeController.categories.map((category) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
+                    color: AppTheme.secondarySwatch.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Image.asset(
+                            category.assetPath,
                             color: AppTheme.primarySwatch[700],
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 4),
+                        Expanded(
+                          child: Text(
+                            category.title,
+                            style: AppTextStyle.bold12(
+                              color: AppTheme.primarySwatch[700],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }).toList(),
-          ),
-        ),
+                );
+              }).toList(),
+            ),
+          );
+        }),
       ],
     );
   }
 }
 
 class HeroLayoutCard extends StatelessWidget {
-  const HeroLayoutCard({super.key, required this.imageInfo});
+  const HeroLayoutCard({super.key, required this.banner});
 
-  final ImageInfo imageInfo;
+  final BannerModel banner;
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +140,7 @@ class HeroLayoutCard extends StatelessWidget {
         color: Colors.black87,
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
-          image: NetworkImage(imageInfo.url),
+          image: NetworkImage(banner.url),
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
             Colors.black.withValues(alpha: 0.3),
@@ -146,13 +160,13 @@ class HeroLayoutCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    imageInfo.title,
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    banner.title,
+                    style: const TextStyle(fontSize: 18, color: Colors.white),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    imageInfo.name,
+                    banner.name,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: Colors.white70,
                       fontWeight: FontWeight.w600,
@@ -161,7 +175,7 @@ class HeroLayoutCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    imageInfo.subtitle,
+                    banner.subtitle,
                     style: Theme.of(
                       context,
                     ).textTheme.bodyMedium?.copyWith(color: Colors.white),
@@ -180,7 +194,7 @@ class HeroLayoutCard extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 0.55,
                   child: CachedNetworkImage(
-                    imageUrl: imageInfo.thumbUrl,
+                    imageUrl: banner.thumbUrl,
                     fit: BoxFit.cover,
                     placeholder: (context, url) => Container(
                       color: Colors.grey[300],
@@ -207,85 +221,4 @@ class HeroLayoutCard extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Updated ImageInfo with real placeholder images
-
-enum ImageInfo {
-  image0(
-    'Pain Relief',
-    'Effective and fast-acting',
-    'Paracetamol',
-    'https://static.vecteezy.com/system/resources/thumbnails/004/449/782/small_2x/abstract-geometric-medical-cross-shape-medicine-and-science-concept-background-medicine-medical-health-cross-healthcare-decoration-for-flyers-poster-web-banner-and-card-illustration-vector.jpg',
-    'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?semt=ais_hybrid&w=740&q=80',
-  ),
-  image1(
-    'Cold & Flu',
-    'Treat symptoms quickly',
-    'FluMed',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4kgRAwHBd0aAZCJIH-Wrlz0AzyWaqQAT2KP4EMWP_-5zEB_jClIoedBa9C7jTbjcagPE&usqp=CAU',
-    'https://thumbs.dreamstime.com/b/portrait-physician-looking-down-notepad-portrait-physician-looking-down-notepad-overwhelmed-concerns-man-wearing-157193179.jpg',
-  ),
-  image2(
-    'Vitamin Supplements',
-    'Boost your immunity',
-    'Vitamin C',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHxiXTOjKhZUPadC2WWVcbZ8W119wHEblez6rbOZkjb_E_8NNP-fEwTgjnARN_JpGyv2k&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScEp6IBL--G4_UBnjFpLKT2ujIlOh7yiTU2dHUGI4mr1JiyF8nxgwiRkoHYosiYfwZ7wA&usqp=CAU',
-  ),
-  image3(
-    'Heart Health',
-    'Supports cardiovascular wellness',
-    'CardioPlus',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS596r59Wm09UV4cbw9x63dPvYmhgAPElUkH4CpkCiFLx7v5CHAcBv4tR0vwZb8hX2byk&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHyQ5_c94LFven5AoiP09RAFZpMxGQUEAVoXhr74MXEXakmIvV0XAt37_eFGAhjwwUwlg&usqp=CAU',
-  ),
-  image4(
-    'Skin Care',
-    'Gentle and nourishing',
-    'DermaCare Cream',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYVuFczeRNIPisELsT4ZsyAQlP3hUSbXZvHjKdRCMACNVA2HceZI5D6yZ76yTkt7KYgvc&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9YjQ1Y7lE-DetVKtEeAps-5gP5f5UOkFXIiKBmjDiIZiu5m6TyRwxBFjHWD1T-ev5klQ&usqp=CAU',
-  ),
-  image5(
-    'Allergy Relief',
-    'Fast-acting antihistamines',
-    'AllerStop',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHxiXTOjKhZUPadC2WWVcbZ8W119wHEblez6rbOZkjb_E_8NNP-fEwTgjnARN_JpGyv2k&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOFeHbCl9XvD7fGILY3sHhZw5I4jFC41zdnXVyw1U2AwsWINHkB4790dtIHaTixkwjk5c&usqp=CAU',
-  ),
-  image6(
-    'Digestive Health',
-    'Supports healthy digestion',
-    'Probiotics',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWH8m03SA3CciLZrV_--Hx8FY_GfS64wH38cU_EVzPDuTqNKqDzQCG-GOqhUx5GCjq4Vc&usqp=CAU',
-    'https://img.freepik.com/free-photo/confident-young-female-doctor-medical-robe-with-stethoscope-points-side-holds-question-mark-isolated-white-background-with-copy-space_141793-34400.jpg?semt=ais_hybrid&w=740&q=80',
-  );
-
-  const ImageInfo(
-    this.title,
-    this.subtitle,
-    this.name,
-    this.url,
-    this.thumbUrl,
-  );
-  final String title;
-  final String subtitle;
-  final String name;
-  final String url;
-  final String thumbUrl;
-}
-
-class CategoryInfo {
-  const CategoryInfo({required this.title, required this.assetPath});
-  final String title;
-  final String assetPath;
-
-  static const List<CategoryInfo> categoriesInfo = [
-    CategoryInfo(title: 'Favorite', assetPath: AppAssets.favorite),
-    CategoryInfo(title: 'Doctors', assetPath: AppAssets.doctor),
-    CategoryInfo(title: 'Pharmacy', assetPath: AppAssets.pharmacy),
-    CategoryInfo(title: 'Specialties', assetPath: AppAssets.specialties),
-    CategoryInfo(title: 'Record', assetPath: AppAssets.record),
-  ];
 }

@@ -72,4 +72,16 @@ class AppAssets {
   static const String pharmacy = 'assets/icons/Pharmacy.png';
   static const String record = 'assets/icons/record.png';
   static const String specialties = 'assets/icons/Specialties.png';
+  //
+  static const String cardiology = 'assets/icons/Cardiology.png';
+  static const String dermatology = 'assets/icons/Dermatology.png';
+  static const String generalmedicine = 'assets/icons/Generalmedicine.png';
+  static const String gynecology = 'assets/icons/Gynecology.png';
+  static const String odontology = 'assets/icons/Odontology.png';
+  static const String oncology = 'assets/icons/Oncology.png';
+  static const String ophtamology = 'assets/icons/Ophtamology.png';
+  static const String orthopedics = 'assets/icons/Orthopedics.png';
+  static const String search = 'assets/icons/search.png';
+  static const String notification = 'assets/icons/notification.png';
+  static const String setting = 'assets/icons/setting.png';
 }

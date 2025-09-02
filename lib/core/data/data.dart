@@ -1,132 +1,149 @@
+import 'package:medical_app/config/app_asset/app_assets.dart';
+
 class Datas {
+  static var doctorsBySpecialty = {
+    "Cardiology": [
+      {
+        "name": "Dr. John Doe",
+        "specialty": "Interventional Cardiologist",
+        "image":
+            "https://www.future-doctor.de/wp-content/uploads/2024/08/shutterstock_2480850611.jpg",
+      },
+    ],
+    "Dermatology": [
+      {
+        "name": "Dr. Sarah Smith",
+        "specialty": "Dermatologist",
+        "image":
+            "https://img.freepik.com/free-photo/portrait-young-female-doctor_23-2148827698.jpg",
+      },
+    ],
+    "General medicine": [
+      {
+        "name": "Dr. Sarah Smith",
+        "specialty": "Dermatologist",
+        "image":
+            "https://img.freepik.com/free-photo/portrait-young-female-doctor_23-2148827698.jpg",
+      },
+    ],
+    "Gynecology": [
+      {
+        "name": "Dr. Sarah Smith",
+        "specialty": "Dermatologist",
+        "image":
+            "https://img.freepik.com/free-photo/portrait-young-female-doctor_23-2148827698.jpg",
+      },
+    ],
+    "Odontology": [
+      {
+        "name": "Dr. Sarah Smith",
+        "specialty": "Dermatologist",
+        "image":
+            "https://img.freepik.com/free-photo/portrait-young-female-doctor_23-2148827698.jpg",
+      },
+    ],
+    "Oncology": [
+      {
+        "name": "Dr. Michael Lee",
+        "specialty": "Neurologist",
+        "image":
+            "https://img.freepik.com/free-photo/portrait-smiling-male-doctor_171337-1532.jpg",
+      },
+    ],
+    "Ophtamology": [
+      {
+        "name": "Dr. Emily Davis",
+        "specialty": "Pediatrician",
+        "image":
+            "https://img.freepik.com/free-photo/beautiful-female-doctor_23-2147896007.jpg",
+      },
+    ],
+    "Orthopedics": [
+      {
+        "name": "Dr. James Wilson",
+        "specialty": "Orthopedic Surgeon",
+        "image":
+            "https://img.freepik.com/free-photo/portrait-confident-male-doctor_1098-19859.jpg",
+      },
+    ],
+  };
+  // ========================
   static var data = {
-    'data': {
-      'popular': [
-        {
-          'name': 'Sithy',
-          'image':
-              'https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
-          'description': 'ini adalah deskripsi A',
-        },
-        {
-          'name': 'Bunna',
-          'image':
-              'https://media.istockphoto.com/id/1168977609/photo/paparazzi-photographer-in-petropolis-rio-de-janeiro.jpg?s=612x612&w=0&k=20&c=R0XWB0-J0s-kbWfW6RgYGvNGMxnMSProeb8_KH-D2AA=',
-          'description': 'ini adalah deskripsi B',
-        },
-        {
-          'name': 'Boss',
-          'image':
-              'https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
-          'description': 'ini adalah deskripsi C',
-        },
-        {
-          'name': 'Ben',
-          'image':
-              'https://media.istockphoto.com/id/855413438/photo/take-every-chance-you-get-in-life.jpg?b=1&s=612x612&w=0&k=20&c=27pIidhiQYYaQCGI1fDfguo8MizvO7Gi2HwgJiY5Jz4=',
-          'description': 'ini adalah deskripsi D',
-        },
-      ],
-      'latest': [
-        {
-          'name': 'Sithy',
-          'image':
-              'https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
-          'description': 'ini adalah deskripsi A',
-        },
-        {
-          'name': 'Bunna',
-          'image':
-              'https://media.istockphoto.com/id/1168977609/photo/paparazzi-photographer-in-petropolis-rio-de-janeiro.jpg?s=612x612&w=0&k=20&c=R0XWB0-J0s-kbWfW6RgYGvNGMxnMSProeb8_KH-D2AA=',
-          'description': 'ini adalah deskripsi B',
-        },
-        {
-          'name': 'Boss',
-          'image':
-              'https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
-          'description': 'ini adalah deskripsi C',
-        },
-        {
-          'name': 'Ben',
-          'image':
-              'https://media.istockphoto.com/id/855413438/photo/take-every-chance-you-get-in-life.jpg?b=1&s=612x612&w=0&k=20&c=27pIidhiQYYaQCGI1fDfguo8MizvO7Gi2HwgJiY5Jz4=',
-          'description': 'ini adalah deskripsi D',
-        },
-      ],
-    },
+    'specialties': [
+      {"title": "Cardiology", "image": AppAssets.cardiology},
+      {"title": "Dermatology", "image": AppAssets.dermatology},
+      {"title": "General medicine", "image": AppAssets.generalmedicine},
+      {"title": "Gynecology", "image": AppAssets.gynecology},
+      {"title": "Odontology", "image": AppAssets.odontology},
+      {"title": "Oncology", "image": AppAssets.oncology},
+      {"title": "Ophtamology", "image": AppAssets.ophtamology},
+      {"title": "Orthopedics", "image": AppAssets.orthopedics},
+    ],
   };
 
-  static var notificationData = {
-    'data': {
-      'new': {
-        'categoryName': 'New',
-        'datas': [
-          {
-            'name': 'Sithy',
-            'image': 'assets/Sastra Digital Solution.png',
-            'description':
-                'updated data list of all available widgets, please check and update your app',
-            'icon': '',
-            'time': '2h',
-          },
-        ],
-      },
-      'today': {
-        'categoryName': 'New',
-        'datas': [
-          {
-            'name': 'Dara',
-            'image': 'assets/Sastra Digital Solution.png',
-            'description':
-                'finalized other widgets data, please check and update your app',
-            'icon': '',
-            'time': '2h',
-          },
-          {
-            'name': 'Sithy',
-            'image': 'assets/Sastra Digital Solution.png',
-            'description':
-                'updated data list of all available widgets, please check and update your app',
-            'icon': '',
-            'time': '2h',
-          },
-        ],
-      },
-      'earlier': {
-        'categoryName': 'New',
-        'datas': [
-          {
-            'name': 'Bory',
-            'image': 'assets/Sastra Digital Solution.png',
-            'description': 'Please check and update your app',
-            'icon': '',
-            'time': '2h',
-          },
-          {
-            'name': 'Dara',
-            'image': 'assets/Sastra Digital Solution.png',
-            'description':
-                'finalized other widgets data, please check and update your app',
-            'icon': '',
-            'time': '2h',
-          },
-          {
-            'name': 'Bory',
-            'image': 'assets/Sastra Digital Solution.png',
-            'description': 'Please check and update your app',
-            'icon': '',
-            'time': '2h',
-          },
-          {
-            'name': 'Dara',
-            'image': 'assets/Sastra Digital Solution.png',
-            'description':
-                'finalized other widgets data, please check and update your app',
-            'icon': '',
-            'time': '2h',
-          },
-        ],
-      },
+  // =======================
+  static const bannerData = [
+    {
+      "title": "Pain Relief",
+      "subtitle": "Effective and fast-acting",
+      "name": "Paracetamol",
+      "url":
+          "https://static.vecteezy.com/system/resources/thumbnails/004/449/782/small_2x/abstract-geometric-medical-cross-shape-medicine-and-science-concept-background-medicine-medical-health-cross-healthcare-decoration-for-flyers-poster-web-banner-and-card-illustration-vector.jpg",
+      "thumbUrl":
+          "https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg",
     },
-  };
+    {
+      "title": "Cold & Flu",
+      "subtitle": "Treat symptoms quickly",
+      "name": "FluMed",
+      "url":
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4kgRAwHBd0aAZCJIH-Wrlz0AzyWaqQAT2KP4EMWP_-5zEB_jClIoedBa9C7jTbjcagPE&usqp=CAU",
+      "thumbUrl":
+          "https://thumbs.dreamstime.com/b/portrait-physician-looking-down-notepad-portrait-physician-looking-down-notepad-overwhelmed-concerns-man-wearing-157193179.jpg",
+    },
+    {
+      "title": "Allergy Relief",
+      "subtitle": "Fast-acting anti-histamine",
+      "name": "AllerFree",
+      "url":
+          "https://img.freepik.com/free-vector/medical-banner-background_23-2148493817.jpg",
+      "thumbUrl":
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqeFcT12pXgXjcvRreL1lV33rqaDquu_WdLHdZFnKOBh9t6yDjVV8qJBmM5xpp6QWbl7U&usqp=CAU",
+    },
+    {
+      "title": "Heart Health",
+      "subtitle": "Supports cardiovascular system",
+      "name": "CardioPlus",
+      "url":
+          "https://img.freepik.com/free-vector/heart-health-banner-background_23-2148493823.jpg",
+      "thumbUrl":
+          "https://img.freepik.com/free-photo/doctor-holding-heart-model_23-2148502220.jpg",
+    },
+    {
+      "title": "Vitamins & Minerals",
+      "subtitle": "Boost your immunity",
+      "name": "NutriMax",
+      "url":
+          "https://img.freepik.com/free-vector/vitamins-supplements-banner-background_23-2148493830.jpg",
+      "thumbUrl":
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6pXK5Ldi7voiIG14UMcBTCOH3_6sy6yF9IWYkmHSsFai4k11kRj8Wfe8rhG3PVg34YQE&usqp=CAU",
+    },
+    {
+      "title": "Skin Care",
+      "subtitle": "Nourish and protect your skin",
+      "name": "DermaCare",
+      "url":
+          "https://img.freepik.com/free-vector/skin-care-medical-banner_23-2148493837.jpg",
+      "thumbUrl":
+          "https://img.lb.wbmdstatic.com/lhd/provider/462185_7e9a4fc3-accb-4979-b17a-272633023cb9.jpg",
+    },
+  ];
+
+  static const categoriesData = [
+    {"title": "Favorite", "assetPath": AppAssets.favorite},
+    {"title": "Doctors", "assetPath": AppAssets.doctor},
+    {"title": "Pharmacy", "assetPath": AppAssets.pharmacy},
+    {"title": "Specialties", "assetPath": AppAssets.specialties},
+    {"title": "Record", "assetPath": AppAssets.record},
+  ];
 }

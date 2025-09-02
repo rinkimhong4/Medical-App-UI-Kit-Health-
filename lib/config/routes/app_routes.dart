@@ -12,6 +12,8 @@ enum RouteView {
   signup,
   forgotPassword,
   verifyEmail,
+  specialtiesScreen,
+  specialtiesItems,
 }
 
 extension AppPages on RouteView {
