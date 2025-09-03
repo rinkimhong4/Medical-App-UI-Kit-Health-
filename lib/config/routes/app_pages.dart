@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:medical_app/config/routes/app_routes.dart';
 import 'package:medical_app/modules/auth/signin/sing_in_screen.dart';
 import 'package:medical_app/modules/auth/signup/sing_up_screen.dart';
+import 'package:medical_app/modules/items/Categories/categories_screen.dart';
 import 'package:medical_app/modules/items/Specialties/specialties_items.dart';
 import 'package:medical_app/modules/items/Specialties/specialties_screen.dart';
 import 'package:medical_app/modules/screen/binding/home_binding.dart';
@@ -66,6 +67,13 @@ class AppRouting {
         return GetPage(
           name: "/${e.name}",
           page: () => SpecialtiesItems(),
+          // binding: OnboardingBinding(),
+        );
+      case RouteView.categoriesScreen:
+        return GetPage(
+          name: "/${e.name}",
+          page: () => CategoriesScreen(),
+
           // binding: OnboardingBinding(),
         );
     }

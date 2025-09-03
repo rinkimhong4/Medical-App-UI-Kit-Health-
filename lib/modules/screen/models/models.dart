@@ -3,6 +3,7 @@
 //     final specialtiesModel = specialtiesModelFromJson(jsonString);
 
 import 'dart:convert';
+import 'package:flutter/material.dart';
 
 List<SpecialtiesModel> specialtiesModelFromJson(String str) =>
     List<SpecialtiesModel>.from(
@@ -99,4 +100,23 @@ class Cardiology {
     "specialty": specialty,
     "image": image,
   };
+}
+
+List<ListTitleModel> listTitleModelFromJson(String str) =>
+    List<ListTitleModel>.from(
+      json.decode(str).map((x) => ListTitleModel.fromJson(x)),
+    );
+
+class ListTitleModel {
+  String? title;
+  IconData? iconLeading;
+  IconData? iconAction;
+
+  ListTitleModel({this.title, this.iconLeading, this.iconAction});
+
+  factory ListTitleModel.fromJson(Map<String, dynamic> json) => ListTitleModel(
+    title: json["title"],
+    iconLeading: json["iconLeading"] as IconData,
+    iconAction: json["iconAction"] as IconData,
+  );
 }

@@ -1,6 +1,44 @@
+import 'package:flutter/material.dart';
 import 'package:medical_app/config/app_asset/app_assets.dart';
 
 class Datas {
+  static var listTitleModels = [
+    {
+      'title': 'Profile',
+      'iconLeading': Icons.person,
+      'iconAction': Icons.arrow_forward_ios_outlined,
+    },
+    {
+      'title': 'Favorite',
+      'iconLeading': Icons.favorite,
+      'iconAction': Icons.arrow_forward_ios_outlined,
+    },
+    {
+      'title': 'Payment Method',
+      'iconLeading': Icons.payment,
+      'iconAction': Icons.arrow_forward_ios_outlined,
+    },
+    {
+      'title': 'Privacy Policy',
+      'iconLeading': Icons.privacy_tip,
+      'iconAction': Icons.arrow_forward_ios_outlined,
+    },
+    {
+      'title': 'Settings',
+      'iconLeading': Icons.settings,
+      'iconAction': Icons.arrow_forward_ios_outlined,
+    },
+    {
+      'title': 'Help',
+      'iconLeading': Icons.help,
+      'iconAction': Icons.arrow_forward_ios_outlined,
+    },
+    {
+      'title': 'Logout',
+      'iconLeading': Icons.logout,
+      'iconAction': Icons.arrow_forward_ios_outlined,
+    },
+  ];
   static var doctorsBySpecialty = {
     "Cardiology": [
       {

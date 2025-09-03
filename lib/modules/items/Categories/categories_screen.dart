@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:medical_app/config/app_asset/app_assets.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
-import 'package:medical_app/modules/screen/controller/home/home_controller.dart';
-import 'package:medical_app/modules/screen/models/models.dart';
 import 'package:medical_app/widgets/doctor_card_widget.dart';
 
-class SpecialtiesItems extends GetView<HomeController> {
-  const SpecialtiesItems({super.key});
+class CategoriesScreen extends StatelessWidget {
+  const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     const double expandedHeight = 170;
-
-    final String selectedSpecialty = Get.arguments ?? "All";
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -49,7 +42,7 @@ class SpecialtiesItems extends GetView<HomeController> {
                     title: Transform.translate(
                       offset: Offset(0, titleOffset),
                       child: Text(
-                        selectedSpecialty,
+                        'Specialties',
                         style: AppTextStyle.bold18(color: AppColors.white),
                       ),
                     ),
@@ -75,7 +68,7 @@ class SpecialtiesItems extends GetView<HomeController> {
                                   spacing: 10,
                                   children: [
                                     Text(
-                                      selectedSpecialty,
+                                      'Specialties',
                                       style: AppTextStyle.bold18(
                                         color: AppColors.white,
                                       ),
@@ -154,113 +147,16 @@ class SpecialtiesItems extends GetView<HomeController> {
                 },
               ),
             ),
-            SliverToBoxAdapter(child: _buildDoctorList(selectedSpecialty)),
+            SliverToBoxAdapter(
+              child: DoctorCard(
+                imageUrl:
+                    'https://www.future-doctor.de/wp-content/uploads/2024/08/shutterstock_2480850611.jpg',
+                name: 'Dr. Jonh',
+                specialty: 'Teach',
+              ),
+            ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildDoctorList(String specialty) {
-    // Access the reactive doctorsBySpecialty from the controller
-    List<Cardiology> doctors = [];
-    switch (specialty) {
-      case "Cardiology":
-        doctors = controller.doctorsBySpecialty.value.cardiology ?? [];
-        break;
-      case "Dermatology":
-        doctors = controller.doctorsBySpecialty.value.dermatology ?? [];
-        break;
-      case "General medicine":
-        doctors = controller.doctorsBySpecialty.value.generalMedicine ?? [];
-        break;
-      case "Gynecology":
-        doctors = controller.doctorsBySpecialty.value.gynecology ?? [];
-        break;
-      case "Odontology":
-        doctors = controller.doctorsBySpecialty.value.odontology ?? [];
-        break;
-      case "Oncology":
-        doctors = controller.doctorsBySpecialty.value.oncology ?? [];
-        break;
-      case "Ophtamology":
-        doctors = controller.doctorsBySpecialty.value.ophtamology ?? [];
-        break;
-      case "Orthopedics":
-        doctors = controller.doctorsBySpecialty.value.orthopedics ?? [];
-        break;
-      default:
-        doctors = [];
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-      child: Column(
-        spacing: 10,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                spacing: 10,
-                children: [
-                  Text(
-                    'Sort by',
-                    style: AppTextStyle.regular12(color: AppColors.black),
-                  ),
-                  Container(
-                    width: 47,
-                    height: 21,
-                    decoration: BoxDecoration(
-                      color: AppTheme.primarySwatch,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    child: Center(
-                      child: Text('A-Z', style: AppTextStyle.bold14()),
-                    ),
-                  ),
-                  Container(
-                    width: 47,
-                    height: 21,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppTheme.primarySwatch,
-                        width: 1.5,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Filter',
-                        style: AppTextStyle.bold14(
-                          color: AppTheme.primarySwatch,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Text(
-                'see all',
-                style: AppTextStyle.regular12(color: AppTheme.primarySwatch),
-              ),
-            ],
-          ),
-          Divider(color: AppTheme.primarySwatch[200], thickness: 1.5),
-          Column(
-            children: doctors.map((doc) {
-              return DoctorCard(
-                imageUrl: doc.image ?? '',
-                name: doc.name ?? '',
-                specialty: doc.specialty ?? '',
-                onInfoTap: () => print("Info tapped for ${doc.name}"),
-                onCalendarTap: () => print("Calendar tapped for ${doc.name}"),
-                onDetailsTap: () => print("Details tapped for ${doc.name}"),
-                onFavoriteTap: () => print("Favorite tapped for ${doc.name}"),
-              );
-            }).toList(),
-          ),
-        ],
       ),
     );
   }

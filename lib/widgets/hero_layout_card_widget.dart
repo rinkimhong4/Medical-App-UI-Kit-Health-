@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medical_app/config/routes/app_routes.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
 import 'package:medical_app/modules/screen/controller/home/home_controller.dart';
 import 'package:medical_app/modules/screen/models/top_banner_models.dart';
@@ -62,9 +63,12 @@ class _TopBannerScreenState extends State<TopBannerScreen> {
                 'Categories',
                 style: AppTextStyle.bold16(color: AppColors.black),
               ),
-              Text(
-                'See all',
-                style: AppTextStyle.regular12(color: AppTheme.primarySwatch),
+              GestureDetector(
+                onTap: () => RouteView.categoriesScreen.go(),
+                child: Text(
+                  'See all',
+                  style: AppTextStyle.regular12(color: AppTheme.primarySwatch),
+                ),
               ),
             ],
           ),

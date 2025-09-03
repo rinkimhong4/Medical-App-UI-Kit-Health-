@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:medical_app/app.dart';
 import 'package:medical_app/core/service/local_service.dart';
 import 'package:medical_app/modules/screen/controller/auth/auth_controller.dart';
+import 'package:medical_app/modules/screen/controller/profile_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -21,5 +22,6 @@ Future<void> main() async {
 
   /// Initialize GetX controllers
   Get.put(AuthController());
+  Get.put(ProfileController());
   runApp(const MyApp());
 }

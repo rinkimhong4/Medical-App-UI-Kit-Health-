@@ -8,9 +8,11 @@ class HomeController extends GetxController {
   var loading = true.obs;
   var loadingBanners = true.obs;
   var loadingCategories = true.obs;
+  var listTitleModel = true.obs;
 
   List<BannerModel> banners = [];
   List<CategoryModel> categories = [];
+  var listTitleModels = <ListTitleModel>[].obs;
   var doctorsBySpecialty = DoctorsBySpecialtyModels().obs;
 
   @override

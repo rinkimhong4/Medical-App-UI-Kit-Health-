@@ -14,6 +14,7 @@ enum RouteView {
   verifyEmail,
   specialtiesScreen,
   specialtiesItems,
+  categoriesScreen,
 }
 
 extension AppPages on RouteView {
