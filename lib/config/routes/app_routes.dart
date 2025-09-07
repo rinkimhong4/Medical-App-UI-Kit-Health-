@@ -10,8 +10,7 @@ enum RouteView {
   onboarding,
   signin,
   signup,
-  forgotPassword,
-  verifyEmail,
+
   specialtiesScreen,
   specialtiesItems,
   categoriesScreen,

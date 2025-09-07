@@ -30,6 +30,8 @@ dependencies:
   another_flutter_splash_screen: ^1.2.1
   supabase_flutter: ^2.10.0
   get_storage: ^2.1.1
+  image_picker: ^1.1.2
+  flutter_cache_manager: ^3.4.1
 
 dev_dependencies:
   flutter_test:

@@ -1,224 +1,289 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:io' show File;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
 import 'package:medical_app/modules/screen/controller/auth/auth_controller.dart';
 import 'package:medical_app/modules/screen/controller/profile_controller.dart';
+import 'package:medical_app/modules/screen/view/edit_profile_screen.dart';
 
-class ProfileScreens extends GetView<ProfileController> {
-  ProfileScreens({super.key});
-
-  final authController = Get.find<AuthController>();
-  final name = 'Dr. Jonh';
+class ProfileScreens extends StatefulWidget {
+  const ProfileScreens({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    const double expandedHeight = 250;
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        backgroundColor: AppColors.white,
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              leading: Icon(Icons.arrow_back_ios),
-              pinned: true,
-              expandedHeight: expandedHeight,
-              backgroundColor: AppTheme.primarySwatch,
-              elevation: 5,
-              flexibleSpace: LayoutBuilder(
-                builder: (context, constraints) {
-                  final maxHeight = constraints.maxHeight;
-                  final minHeight =
-                      kToolbarHeight + MediaQuery.of(context).padding.top;
-
-                  // Scroll factor: 0 = fully collapsed, 1 = fully expanded
-                  final t =
-                      ((maxHeight - minHeight) / (expandedHeight - minHeight))
-                          .clamp(0.0, 1.0);
-
-                  // Title vertical position: moves smoothly from bottom to center
-                  final titleOffset = 25 * t;
-                  return FlexibleSpaceBar(
-                    collapseMode: CollapseMode.pin,
-                    titlePadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 5,
-                    ),
-                    title: Transform.translate(
-                      offset: Offset(0, titleOffset),
-                      child: Text(
-                        name,
-                        style: AppTextStyle.bold18(color: AppColors.white),
-                      ),
-                    ),
-                    background: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            AppTheme.primarySwatch,
-                            AppTheme.secondarySwatch,
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                      ),
-                      alignment: Alignment.bottomCenter,
-                      child: Opacity(
-                        opacity: t,
-                        child: Column(
-                          spacing: 10,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // Add your top text here
-                            Align(
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding: EdgeInsets.only(bottom: 30),
-                                child: Column(
-                                  spacing: 10,
-                                  children: [
-                                    Text(
-                                      'My Profile',
-                                      style: AppTextStyle.bold18(
-                                        color: AppColors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            // Inside the FlexibleSpaceBar's background Column
-                            _buildAvatar,
-                            SizedBox(height: 20),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(children: [SizedBox(height: 30), buildList()]),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  get _buildAvatar {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 20,
-      children: [
-        Stack(
-          children: [
-            // avatar
-            CircleAvatar(
-              radius: 70,
-              backgroundImage: CachedNetworkImageProvider(
-                'https://www.future-doctor.de/wp-content/uploads/2024/08/shutterstock_2480850611.jpg',
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Container(
-                height: 44,
-                width: 44,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.edit, color: Colors.black),
-              ),
-            ),
-          ],
-        ),
-
-        // User Info
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(name, style: AppTextStyle.bold20()),
-            Text(
-              '+123 567 89000',
-              style: AppTextStyle.regular14(color: AppColors.white),
-            ),
-            Text(
-              'Janedoe@example.com',
-              style: AppTextStyle.regular14(color: AppColors.white),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  buildList() {
-    return Obx(() {
-      if (controller.loading.value) {
-        return const Center(child: CircularProgressIndicator());
-      }
-      // ProfileBinding
-      final listTitleModels = controller.listTitleModels;
-      return Column(
-        children: List.generate(listTitleModels.length, (index) {
-          final item = listTitleModels[index];
-          return BuildListTitle(
-            title: item.title ?? '',
-            iconLeading: item.iconLeading!,
-            iconAction: item.iconAction!,
-          );
-        }),
-      );
-    });
-  }
+  State<ProfileScreens> createState() => _ProfileScreensState();
 }
 
-class BuildListTitle extends StatelessWidget {
-  final String title;
-  final IconData iconLeading;
-  final VoidCallback? onTap;
-  final IconData iconAction;
-  const BuildListTitle({
-    super.key,
-    required this.title,
-    required this.iconAction,
-    required this.iconLeading,
-    this.onTap,
-  });
+class _ProfileScreensState extends State<ProfileScreens> {
+  final authController = Get.find<AuthController>();
+  final profileController = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.white,
+      body: SafeArea(child: _buildCustomScrollView()),
+    );
+  }
+
+  CustomScrollView _buildCustomScrollView() {
+    return CustomScrollView(slivers: [_buildBody]);
+  }
+
+  get _buildBody => SliverToBoxAdapter(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+      child: Obx(() {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildProfileHeader,
+            SizedBox(height: 20),
+            _buildListTitle,
+            SizedBox(height: 20),
+          ],
+        );
+      }),
+    ),
+  );
+
+  Widget get _buildListTitle {
+    // List of menu items with onTap actions
+    List<Map<String, dynamic>> listData = [
+      {
+        'title': 'Profile',
+        'icon': Icons.person,
+        'onTap': () {
+          Get.to(() => EditProfileScreen());
+        },
+      },
+      {
+        'title': 'Favorite',
+        'icon': Icons.favorite,
+        'onTap': () {
+          print('Navigate to Favorite');
+        },
+      },
+      {
+        'title': 'Payment Method',
+        'icon': Icons.payment,
+        'onTap': () {
+          print('Navigate to Payment Method');
+        },
+      },
+      {
+        'title': 'Privacy Policy',
+        'icon': Icons.lock,
+        'onTap': () {
+          print('Navigate to Privacy Policy');
+        },
+      },
+      {
+        'title': 'Settings',
+        'icon': Icons.settings,
+        'onTap': () {
+          print('Navigate to Settings');
+        },
+      },
+      {
+        'title': 'Help',
+        'icon': Icons.help,
+        'onTap': () {
+          print('Navigate to Help');
+        },
+      },
+      {
+        'title': 'Logout',
+        'icon': Icons.logout,
+        'onTap': () {
+          // Show confirmation dialog
+          showDialog(
+            context: Get.context!,
+            builder: (context) => AlertDialog(
+              title: Text('Confirm Logout'),
+              content: Text('Are you sure you want to logout?'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('No'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    authController.signOut();
+                  },
+                  child: Text('Yes'),
+                ),
+              ],
+            ),
+          );
+        },
+      },
+    ];
+
     return Column(
-      children: [
-        ListTile(
+      children: listData.map((item) {
+        return ListTile(
           leading: Container(
             width: 44,
             height: 44,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppTheme.primarySwatch,
+              color: AppTheme.secondarySwatch,
             ),
-            child: Icon(iconLeading, color: AppColors.white, size: 24),
+            child: Icon(item['icon'], color: Colors.white),
           ),
           title: Text(
-            title,
-            style: AppTextStyle.bold14(color: AppColors.black),
+            item['title'],
+            style: AppTextStyle.regular14(color: AppColors.black),
           ),
-          trailing: Icon(iconAction),
+          trailing: Icon(Icons.arrow_forward_ios, size: 18),
+          onTap: item['onTap'],
+        );
+      }).toList(),
+    );
+  }
+
+  get _buildProfileHeader {
+    final user = authController.currentUser;
+    final username = profileController.username.value.isNotEmpty
+        ? profileController.username.value
+        : (user?.email?.split('@')[0] ?? 'Guest');
+
+    final email = profileController.email.value.isNotEmpty
+        ? profileController.email.value
+        : (user?.email ?? 'guest@gmail.com');
+
+    final imagePath = profileController.profileImageUrl.value;
+    final isNetwork = imagePath.startsWith('http');
+
+    Widget profileImageWidget;
+
+    if (profileController.isLoading.value) {
+      profileImageWidget = CircleAvatar(
+        radius: 56,
+        backgroundColor: Theme.of(context).cardColor,
+        child: CircularProgressIndicator.adaptive(),
+      );
+    } else if (imagePath.isNotEmpty) {
+      if (isNetwork) {
+        profileImageWidget = CircleAvatar(
+          radius: 60,
+          backgroundColor: Theme.of(context).primaryColor,
+          child: CircleAvatar(
+            radius: 58,
+            backgroundColor: Theme.of(context).cardColor,
+            backgroundImage: NetworkImage(imagePath),
+            onBackgroundImageError: (_, __) =>
+                debugPrint("Network image error"),
+          ),
+        );
+      } else {
+        final file = File(imagePath);
+        profileImageWidget = file.existsSync()
+            ? CircleAvatar(
+                radius: 56,
+                backgroundColor: Theme.of(context).cardColor,
+                backgroundImage: FileImage(file),
+              )
+            : CircleAvatar(
+                radius: 56,
+                backgroundColor: Theme.of(context).cardColor,
+                child: Icon(
+                  Icons.person,
+                  size: 56,
+                  color: Theme.of(context).hintColor,
+                ),
+              );
+      }
+    } else {
+      profileImageWidget = CircleAvatar(
+        radius: 56,
+        backgroundColor: Theme.of(context).cardColor,
+        child: Icon(Icons.person, size: 56, color: Theme.of(context).hintColor),
+      );
+    }
+
+    ///
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Stack(
+          children: [
+            profileImageWidget,
+            Positioned(
+              bottom: 0,
+              right: 0,
+              top: 75,
+              child: GestureDetector(
+                onTap: () async {
+                  final userId = authController.currentUser?.id;
+                  if (userId != null) {
+                    await profileController.uploadProfileImage(userId);
+                  } else {
+                    Get.snackbar(
+                      'Error',
+                      'Please log in to upload an image.',
+                      snackPosition: SnackPosition.BOTTOM,
+                    );
+                  }
+                },
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Theme.of(context).cardColor,
+                      width: 2,
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.camera_alt_outlined,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                username[0].toUpperCase() + username.substring(1),
+                style:
+                    Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color:
+                          Theme.of(context).textTheme.titleSmall?.color ??
+                          Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ) ??
+                    TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.white,
+                    ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                email,
+                style:
+                    Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: Theme.of(context).hintColor,
+                    ) ??
+                    TextStyle(fontSize: 14, color: Theme.of(context).hintColor),
+              ),
+            ],
+          ),
         ),
       ],
     );
   }
 }
-// Center(
-//         child: LogOutButton(
-//           text: "Sign Out",
-//           onPressed: () => authController.signOut(),
-//         ),
-//       ),

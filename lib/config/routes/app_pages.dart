@@ -45,18 +45,18 @@ class AppRouting {
           page: () => SignUpScreen(),
           // binding: OnboardingBinding(),
         );
-      case RouteView.forgotPassword:
-        return GetPage(
-          name: "/${e.name}",
-          page: () => ForgotPasswordScreen(),
-          // binding: OnboardingBinding(),
-        );
-      case RouteView.verifyEmail:
-        return GetPage(
-          name: "/${e.name}",
-          page: () => VerifyEmailScreen(),
-          // binding: OnboardingBinding(),
-        );
+      // case RouteView.forgotPassword:
+      //   return GetPage(
+      //     name: "/${e.name}",
+      //     page: () => ForgotPasswordScreen(),
+      //     // binding: OnboardingBinding(),
+      //   );
+      // case RouteView.verifyEmail:
+      //   return GetPage(
+      //     name: "/${e.name}",
+      //     page: () => VerifyEmailScreen(),
+      //     // binding: OnboardingBinding(),
+      //   );
       case RouteView.specialtiesScreen:
         return GetPage(
           name: "/${e.name}",

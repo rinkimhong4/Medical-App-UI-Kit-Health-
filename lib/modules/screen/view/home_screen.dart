@@ -1,11 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide ImageInfo;
 import 'package:get/get.dart';
 import 'package:medical_app/config/app_asset/app_assets.dart';
 import 'package:medical_app/config/routes/app_routes.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
+import 'package:medical_app/modules/screen/controller/auth/auth_controller.dart';
 import 'package:medical_app/modules/screen/controller/home/home_controller.dart';
+import 'package:medical_app/modules/screen/controller/profile_controller.dart';
 import 'package:medical_app/widgets/hero_layout_card_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -14,6 +17,8 @@ class HomeScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final HomeController controllerInstance = Get.put(HomeController());
+    final authController = Get.find<AuthController>();
+    final profileController = Get.find<ProfileController>();
     controllerInstance.loadingData();
     List<Widget> iconsAppBar = [
       Image.asset(AppAssets.search, color: AppColors.black),
@@ -26,18 +31,48 @@ class HomeScreen extends GetView<HomeController> {
       body: NestedScrollView(
         physics: const BouncingScrollPhysics(),
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          final user = authController.currentUser;
+          final username = profileController.username.value.isNotEmpty
+              ? profileController.username.value
+              : (user?.email?.split('@')[0] ?? 'Guest');
+
+          final imagePath = profileController.profileImageUrl.value;
+          final isNetwork = imagePath.startsWith('http');
+
+          // Use ImageProvider for CircleAvatar
+          ImageProvider? avatarImage;
+          if (profileController.isLoading.value) {
+            avatarImage = null; // Show loading widget
+          } else if (imagePath.isNotEmpty) {
+            avatarImage = isNetwork
+                ? NetworkImage(imagePath)
+                : File(imagePath).existsSync()
+                ? FileImage(File(imagePath))
+                : null;
+          }
+
           return [
             CupertinoSliverNavigationBar(
               border: null,
               backgroundColor: AppColors.white,
-              leading: CircleAvatar(
-                radius: 24,
-                backgroundImage: CachedNetworkImageProvider(
-                  'https://www.catholicsingles.com/wp-content/uploads/2020/06/blog-header-3.png',
-                ),
-              ),
+              leading: profileController.isLoading.value
+                  ? CircleAvatar(
+                      radius: 24,
+                      child: CircularProgressIndicator.adaptive(),
+                    )
+                  : CircleAvatar(
+                      radius: 24,
+                      backgroundColor: AppTheme.primarySwatch[100],
+                      backgroundImage: avatarImage,
+                      child: avatarImage == null
+                          ? Icon(
+                              Icons.person,
+                              color: Theme.of(context).hintColor,
+                            )
+                          : null,
+                    ),
               largeTitle: Text(
-                'Kimhong',
+                username,
                 style: AppTextStyle.bold35(color: AppColors.black),
               ),
               trailing: Row(

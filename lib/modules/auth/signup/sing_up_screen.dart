@@ -456,10 +456,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       padding: EdgeInsets.zero,
                                     ),
                                     onPressed: () async {
-                                      if (social['label'] ==
-                                          'Continue with Facebook') {
-                                        await controller.signInWithFacebook();
-                                      }
+                                      // if (social['label'] ==
+                                      //     'Continue with Facebook') {
+                                      //   await controller.signInWithFacebook();
+                                      // }
                                     },
                                     child: Image.asset(
                                       social['icon'],
@@ -510,256 +510,257 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
+
 // ====
 
 /// Screen for resending email verification links.
-class VerifyEmailScreen extends StatefulWidget {
-  const VerifyEmailScreen({super.key});
+// class VerifyEmailScreen extends StatefulWidget {
+//   const VerifyEmailScreen({super.key});
 
-  @override
-  State<VerifyEmailScreen> createState() => _VerifyEmailScreenState();
-}
+//   @override
+//   State<VerifyEmailScreen> createState() => _VerifyEmailScreenState();
+// }
 
-class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
-  final controller = Get.find<AuthController>();
-  final emailCtrl = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  bool isScrolled = false;
-  final ScrollController scrollController = ScrollController();
+// class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
+//   final controller = Get.find<AuthController>();
+//   final emailCtrl = TextEditingController();
+//   final _formKey = GlobalKey<FormState>();
+//   bool isScrolled = false;
+//   final ScrollController scrollController = ScrollController();
 
-  @override
-  void initState() {
-    super.initState();
-    emailCtrl.text = controller.emailCtrl.text; // Pre-fill with sign-up email
-    scrollController.addListener(_handleScroll);
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     emailCtrl.text = controller.emailCtrl.text; // Pre-fill with sign-up email
+//     scrollController.addListener(_handleScroll);
+//   }
 
-  /// Handles scroll events to update AppBar appearance.
-  void _handleScroll() {
-    final isScrolledDown = scrollController.offset > 10;
-    if (isScrolledDown != isScrolled) {
-      setState(() => isScrolled = isScrolledDown);
-    }
-  }
+//   /// Handles scroll events to update AppBar appearance.
+//   void _handleScroll() {
+//     final isScrolledDown = scrollController.offset > 10;
+//     if (isScrolledDown != isScrolled) {
+//       setState(() => isScrolled = isScrolledDown);
+//     }
+//   }
 
-  /// Gets the AppBar background color based on scroll state.
-  Color get appBarColor =>
-      isScrolled ? AppColors.darkColorLight : AppColors.background;
+//   /// Gets the AppBar background color based on scroll state.
+//   Color get appBarColor =>
+//       isScrolled ? AppColors.darkColorLight : AppColors.background;
 
-  @override
-  void dispose() {
-    emailCtrl.dispose();
-    scrollController.dispose();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     emailCtrl.dispose();
+//     scrollController.dispose();
+//     super.dispose();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: AppColors.darkColorLight),
-            onPressed: () => Get.back(),
-          ),
-          title: isScrolled
-              ? Text(
-                  'Verify Email',
-                  style: AppTheme.lightTheme.textTheme.titleLarge?.copyWith(
-                    color: AppColors.darkColorLight,
-                  ),
-                )
-              : null,
-          backgroundColor: appBarColor,
-          elevation: isScrolled ? 5 : 0,
-          centerTitle: true,
-        ),
-        backgroundColor: AppColors.background,
-        body: SingleChildScrollView(
-          controller: scrollController,
-          child: Container(
-            width: Get.width,
-            color: AppColors.background,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Verify Your Email',
-                  style: AppTheme.lightTheme.textTheme.titleLarge?.copyWith(
-                    color: AppColors.darkColorLight,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Enter your email to resend the verification link.',
-                  style: AppTheme.lightTheme.textTheme.labelMedium?.copyWith(
-                    color: AppColors.blackGrey,
-                  ),
-                ),
-                const SizedBox(height: 58),
-                Form(
-                  key: _formKey,
-                  child: Focus(
-                    child: Builder(
-                      builder: (context) {
-                        final hasFocus = Focus.of(context).hasFocus;
-                        return Column(
-                          children: [
-                            TextFormField(
-                              autocorrect: false,
-                              controller: emailCtrl,
-                              decoration: InputDecoration(
-                                labelText: 'Email',
-                                hintText: 'Enter your email',
-                                hintStyle: AppTheme
-                                    .lightTheme
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(color: AppColors.blackGrey),
-                                labelStyle: TextStyle(
-                                  color: hasFocus
-                                      ? AppColors.darkColorLight
-                                      : AppColors.blackGrey,
-                                ),
-                                prefixIcon: Icon(
-                                  Icons.email_outlined,
-                                  color: hasFocus
-                                      ? AppColors.darkColorLight
-                                      : AppColors.blackGrey,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32),
-                                  borderSide: BorderSide(
-                                    color: AppColors.darkColorLight.withValues(
-                                      alpha: 0.6,
-                                    ),
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(32),
-                                  borderSide: BorderSide(
-                                    color: AppColors.darkColorLight,
-                                  ),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.red,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(32),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.red,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(32),
-                                ),
-                                errorStyle: const TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              validator: controller.validateEmail,
-                              style: const TextStyle(
-                                color: AppColors.darkColorLight,
-                              ),
-                            ),
-                            const SizedBox(height: 50),
-                            SizedBox(
-                              width: Get.width,
-                              height: 52,
-                              child: Obx(
-                                () => ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    backgroundColor: AppColors.darkColorLight,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(32),
-                                    ),
-                                    overlayColor: AppColors.darkColorLight
-                                        .withValues(alpha: 0.1),
-                                    foregroundColor: controller.isLoading.value
-                                        ? AppColors.darkColorLight.withValues(
-                                            alpha: 0.5,
-                                          )
-                                        : AppColors.darkColorLight,
-                                  ),
-                                  onPressed: () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      await controller.resendVerificationEmail(
-                                        emailCtrl.text.trim(),
-                                      );
-                                      emailCtrl.clear();
-                                    }
-                                  },
-                                  child: controller.isLoading.value
-                                      ? const SizedBox(
-                                          width: 20,
-                                          height: 20,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            color: AppColors.white,
-                                          ),
-                                        )
-                                      : Text(
-                                          'Resend Verification Email',
-                                          style: AppTheme
-                                              .lightTheme
-                                              .textTheme
-                                              .bodyMedium
-                                              ?.copyWith(
-                                                color: AppColors.white,
-                                              ),
-                                        ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Already verified?',
-                                  style: AppTheme
-                                      .lightTheme
-                                      .textTheme
-                                      .labelSmall
-                                      ?.copyWith(color: AppColors.blackGrey),
-                                ),
-                                const SizedBox(width: 8),
-                                TextButton(
-                                  onPressed: () {
-                                    emailCtrl.clear();
-                                    RouteView.signin.go(clearAll: true);
-                                  },
-                                  child: Text(
-                                    'Sign In',
-                                    style: AppTheme
-                                        .lightTheme
-                                        .textTheme
-                                        .labelSmall
-                                        ?.copyWith(
-                                          color: AppColors.darkColorLight,
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () => FocusScope.of(context).unfocus(),
+//       child: Scaffold(
+//         appBar: AppBar(
+//           automaticallyImplyLeading: false,
+//           leading: IconButton(
+//             icon: Icon(Icons.arrow_back_ios, color: AppColors.darkColorLight),
+//             onPressed: () => Get.back(),
+//           ),
+//           title: isScrolled
+//               ? Text(
+//                   'Verify Email',
+//                   style: AppTheme.lightTheme.textTheme.titleLarge?.copyWith(
+//                     color: AppColors.darkColorLight,
+//                   ),
+//                 )
+//               : null,
+//           backgroundColor: appBarColor,
+//           elevation: isScrolled ? 5 : 0,
+//           centerTitle: true,
+//         ),
+//         backgroundColor: AppColors.background,
+//         body: SingleChildScrollView(
+//           controller: scrollController,
+//           child: Container(
+//             width: Get.width,
+//             color: AppColors.background,
+//             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text(
+//                   'Verify Your Email',
+//                   style: AppTheme.lightTheme.textTheme.titleLarge?.copyWith(
+//                     color: AppColors.darkColorLight,
+//                   ),
+//                 ),
+//                 const SizedBox(height: 8),
+//                 Text(
+//                   'Enter your email to resend the verification link.',
+//                   style: AppTheme.lightTheme.textTheme.labelMedium?.copyWith(
+//                     color: AppColors.blackGrey,
+//                   ),
+//                 ),
+//                 const SizedBox(height: 58),
+//                 Form(
+//                   key: _formKey,
+//                   child: Focus(
+//                     child: Builder(
+//                       builder: (context) {
+//                         final hasFocus = Focus.of(context).hasFocus;
+//                         return Column(
+//                           children: [
+//                             TextFormField(
+//                               autocorrect: false,
+//                               controller: emailCtrl,
+//                               decoration: InputDecoration(
+//                                 labelText: 'Email',
+//                                 hintText: 'Enter your email',
+//                                 hintStyle: AppTheme
+//                                     .lightTheme
+//                                     .textTheme
+//                                     .bodyMedium
+//                                     ?.copyWith(color: AppColors.blackGrey),
+//                                 labelStyle: TextStyle(
+//                                   color: hasFocus
+//                                       ? AppColors.darkColorLight
+//                                       : AppColors.blackGrey,
+//                                 ),
+//                                 prefixIcon: Icon(
+//                                   Icons.email_outlined,
+//                                   color: hasFocus
+//                                       ? AppColors.darkColorLight
+//                                       : AppColors.blackGrey,
+//                                 ),
+//                                 enabledBorder: OutlineInputBorder(
+//                                   borderRadius: BorderRadius.circular(32),
+//                                   borderSide: BorderSide(
+//                                     color: AppColors.darkColorLight.withValues(
+//                                       alpha: 0.6,
+//                                     ),
+//                                   ),
+//                                 ),
+//                                 focusedBorder: OutlineInputBorder(
+//                                   borderRadius: BorderRadius.circular(32),
+//                                   borderSide: BorderSide(
+//                                     color: AppColors.darkColorLight,
+//                                   ),
+//                                 ),
+//                                 focusedErrorBorder: OutlineInputBorder(
+//                                   borderSide: const BorderSide(
+//                                     color: Colors.red,
+//                                     width: 1,
+//                                   ),
+//                                   borderRadius: BorderRadius.circular(32),
+//                                 ),
+//                                 errorBorder: OutlineInputBorder(
+//                                   borderSide: const BorderSide(
+//                                     color: Colors.red,
+//                                     width: 1,
+//                                   ),
+//                                   borderRadius: BorderRadius.circular(32),
+//                                 ),
+//                                 errorStyle: const TextStyle(
+//                                   color: Colors.red,
+//                                   fontSize: 12,
+//                                 ),
+//                               ),
+//                               validator: controller.validateEmail,
+//                               style: const TextStyle(
+//                                 color: AppColors.darkColorLight,
+//                               ),
+//                             ),
+//                             const SizedBox(height: 50),
+//                             SizedBox(
+//                               width: Get.width,
+//                               height: 52,
+//                               child: Obx(
+//                                 () => ElevatedButton(
+//                                   style: ElevatedButton.styleFrom(
+//                                     elevation: 0,
+//                                     backgroundColor: AppColors.darkColorLight,
+//                                     shape: RoundedRectangleBorder(
+//                                       borderRadius: BorderRadius.circular(32),
+//                                     ),
+//                                     overlayColor: AppColors.darkColorLight
+//                                         .withValues(alpha: 0.1),
+//                                     foregroundColor: controller.isLoading.value
+//                                         ? AppColors.darkColorLight.withValues(
+//                                             alpha: 0.5,
+//                                           )
+//                                         : AppColors.darkColorLight,
+//                                   ),
+//                                   onPressed: () async {
+//                                     if (_formKey.currentState!.validate()) {
+//                                       await controller.resendVerificationEmail(
+//                                         emailCtrl.text.trim(),
+//                                       );
+//                                       emailCtrl.clear();
+//                                     }
+//                                   },
+//                                   child: controller.isLoading.value
+//                                       ? const SizedBox(
+//                                           width: 20,
+//                                           height: 20,
+//                                           child: CircularProgressIndicator(
+//                                             strokeWidth: 2,
+//                                             color: AppColors.white,
+//                                           ),
+//                                         )
+//                                       : Text(
+//                                           'Resend Verification Email',
+//                                           style: AppTheme
+//                                               .lightTheme
+//                                               .textTheme
+//                                               .bodyMedium
+//                                               ?.copyWith(
+//                                                 color: AppColors.white,
+//                                               ),
+//                                         ),
+//                                 ),
+//                               ),
+//                             ),
+//                             const SizedBox(height: 24),
+//                             Row(
+//                               mainAxisAlignment: MainAxisAlignment.center,
+//                               children: [
+//                                 Text(
+//                                   'Already verified?',
+//                                   style: AppTheme
+//                                       .lightTheme
+//                                       .textTheme
+//                                       .labelSmall
+//                                       ?.copyWith(color: AppColors.blackGrey),
+//                                 ),
+//                                 const SizedBox(width: 8),
+//                                 TextButton(
+//                                   onPressed: () {
+//                                     emailCtrl.clear();
+//                                     RouteView.signin.go(clearAll: true);
+//                                   },
+//                                   child: Text(
+//                                     'Sign In',
+//                                     style: AppTheme
+//                                         .lightTheme
+//                                         .textTheme
+//                                         .labelSmall
+//                                         ?.copyWith(
+//                                           color: AppColors.darkColorLight,
+//                                         ),
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                           ],
+//                         );
+//                       },
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
