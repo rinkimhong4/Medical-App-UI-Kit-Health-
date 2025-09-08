@@ -14,6 +14,7 @@ class HomeController extends GetxController {
   List<CategoryModel> categories = [];
   var listTitleModels = <ListTitleModel>[].obs;
   var doctorsBySpecialty = DoctorsBySpecialtyModels().obs;
+  var doctorsByCategory = DoctorsByCategoryModel().obs;
 
   @override
   void onInit() {
@@ -21,12 +22,44 @@ class HomeController extends GetxController {
     loadBanners();
     loadCategories();
     loadDoctors();
+    loadDoctorsByCategory();
   }
 
   /// Load doctors from Datas
   Future<void> loadDoctors() async {
     final jsonData = Datas.doctorsBySpecialty;
     doctorsBySpecialty.value = DoctorsBySpecialtyModels.fromJson(jsonData);
+  }
+
+  /// Load doctors from Datas
+  Future<void> loadDoctorsByCategory() async {
+    final jsonData = Datas.doctorsByCategory;
+    doctorsByCategory.value = DoctorsByCategoryModel.fromJson(jsonData);
+  }
+
+  /// Convert model → Map for easy UI access
+  Map<String, List<Doctor>> get doctorsMap => {
+    if (doctorsByCategory.value.favorite != null)
+      "Favorite": doctorsByCategory.value.favorite!,
+    if (doctorsByCategory.value.doctors != null)
+      "Doctors": doctorsByCategory.value.doctors!,
+    if (doctorsByCategory.value.pharmacy != null)
+      "Pharmacy": doctorsByCategory.value.pharmacy!,
+    if (doctorsByCategory.value.specialties != null)
+      "Specialties": doctorsByCategory.value.specialties!,
+    if (doctorsByCategory.value.record != null)
+      "Record": doctorsByCategory.value.record!,
+  };
+
+  /// Get all doctors from all categories as a single list
+  List<Doctor> get allDoctors {
+    final all = <Doctor>[];
+    all.addAll(doctorsByCategory.value.favorite ?? []);
+    all.addAll(doctorsByCategory.value.doctors ?? []);
+    all.addAll(doctorsByCategory.value.pharmacy ?? []);
+    all.addAll(doctorsByCategory.value.specialties ?? []);
+    all.addAll(doctorsByCategory.value.record ?? []);
+    return all;
   }
 
   Future<void> loadBanners() async {

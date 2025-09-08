@@ -120,3 +120,63 @@ class ListTitleModel {
     iconAction: json["iconAction"] as IconData,
   );
 }
+
+// ======
+// To parse this JSON data, do
+//
+//     final doctorsByCategoryModel = doctorsByCategoryModelFromJson(jsonString);
+
+DoctorsByCategoryModel doctorsByCategoryModelFromJson(String str) =>
+    DoctorsByCategoryModel.fromJson(json.decode(str));
+
+class DoctorsByCategoryModel {
+  List<Doctor>? favorite;
+  List<Doctor>? doctors;
+  List<Doctor>? pharmacy;
+  List<Doctor>? specialties;
+  List<Doctor>? record;
+
+  DoctorsByCategoryModel({
+    this.favorite,
+    this.doctors,
+    this.pharmacy,
+    this.specialties,
+    this.record,
+  });
+
+  factory DoctorsByCategoryModel.fromJson(
+    Map<String, dynamic> json,
+  ) => DoctorsByCategoryModel(
+    favorite: List<Doctor>.from(
+      json["Favorite"].map((x) => Doctor.fromJson(x)),
+    ),
+    doctors: List<Doctor>.from(json["Doctors"].map((x) => Doctor.fromJson(x))),
+    pharmacy: List<Doctor>.from(
+      json["Pharmacy"].map((x) => Doctor.fromJson(x)),
+    ),
+    specialties: List<Doctor>.from(
+      json["Specialties"].map((x) => Doctor.fromJson(x)),
+    ),
+    record: List<Doctor>.from(json["record"].map((x) => Doctor.fromJson(x))),
+  );
+}
+
+class Doctor {
+  String? name;
+  String? specialty;
+  String? image;
+
+  Doctor({this.name, this.specialty, this.image});
+
+  factory Doctor.fromJson(Map<String, dynamic> json) => Doctor(
+    name: json["name"],
+    specialty: json["specialty"],
+    image: json["image"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "specialty": specialty,
+    "image": image,
+  };
+}

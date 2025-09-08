@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:medical_app/config/app_asset/app_assets.dart';
 
 class Datas {
+  static const categoryAssets = {
+    "Favorite": AppAssets.favorite,
+    "Doctors": AppAssets.doctor,
+    "Pharmacy": AppAssets.pharmacy,
+    "Specialties": AppAssets.specialties,
+    "Record": AppAssets.record,
+  };
+
   static var listTitleModels = [
     {
       'title': 'Profile',
@@ -102,6 +110,48 @@ class Datas {
         "specialty": "Orthopedic Surgeon",
         "image":
             "https://img.freepik.com/free-photo/portrait-confident-male-doctor_1098-19859.jpg",
+      },
+    ],
+  };
+  static var doctorsByCategory = {
+    "Favorite": [
+      {
+        "name": "Dr. John Doe",
+        "specialty": "Interventional Cardiologist",
+        "image":
+            "https://www.future-doctor.de/wp-content/uploads/2024/08/shutterstock_2480850611.jpg",
+      },
+    ],
+    "Doctors": [
+      {
+        "name": "Dr. Sarah Smith",
+        "specialty": "Dermatologist",
+        "image":
+            "https://img.freepik.com/free-photo/portrait-young-female-doctor_23-2148827698.jpg",
+      },
+    ],
+    "Pharmacy": [
+      {
+        "name": "Dr. Sarah Smith",
+        "specialty": "Dermatologist",
+        "image":
+            "https://img.freepik.com/free-photo/portrait-young-female-doctor_23-2148827698.jpg",
+      },
+    ],
+    "Specialties": [
+      {
+        "name": "Dr. Sarah Smith",
+        "specialty": "Dermatologist",
+        "image":
+            "https://img.freepik.com/free-photo/portrait-young-female-doctor_23-2148827698.jpg",
+      },
+    ],
+    "record": [
+      {
+        "name": "Dr. Sarah Smith",
+        "specialty": "Dermatologist",
+        "image":
+            "https://img.freepik.com/free-photo/portrait-young-female-doctor_23-2148827698.jpg",
       },
     ],
   };

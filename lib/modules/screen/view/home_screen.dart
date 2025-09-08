@@ -6,9 +6,11 @@ import 'package:get/get.dart';
 import 'package:medical_app/config/app_asset/app_assets.dart';
 import 'package:medical_app/config/routes/app_routes.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
+import 'package:medical_app/core/data/data.dart';
 import 'package:medical_app/modules/screen/controller/auth/auth_controller.dart';
 import 'package:medical_app/modules/screen/controller/home/home_controller.dart';
 import 'package:medical_app/modules/screen/controller/profile_controller.dart';
+import 'package:medical_app/modules/screen/models/models.dart';
 import 'package:medical_app/widgets/hero_layout_card_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -42,7 +44,7 @@ class HomeScreen extends GetView<HomeController> {
           // Use ImageProvider for CircleAvatar
           ImageProvider? avatarImage;
           if (profileController.isLoading.value) {
-            avatarImage = null; // Show loading widget
+            avatarImage = null;
           } else if (imagePath.isNotEmpty) {
             avatarImage = isNetwork
                 ? NetworkImage(imagePath)
@@ -110,7 +112,7 @@ class HomeScreen extends GetView<HomeController> {
   Widget _buildBodyScreen(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [TopBannerScreen(), _buildSpecialty],
+      children: [TopBannerScreen(), _buildSpecialtyCategory, _buildSpecialty],
     );
   }
 
@@ -158,7 +160,6 @@ class HomeScreen extends GetView<HomeController> {
                     if (index >= items.length) {
                       return SizedBox(width: 130, height: 130);
                     }
-
                     final item = items[index];
                     return GestureDetector(
                       onTap: () =>
@@ -207,4 +208,138 @@ class HomeScreen extends GetView<HomeController> {
       ),
     ],
   );
+
+  Widget get _buildSpecialtyCategory => Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 20, top: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Categories',
+              style: AppTextStyle.bold16(color: AppColors.black),
+            ),
+            GestureDetector(
+              onTap: () => RouteView.categoriesScreen.go(arguments: "All"),
+              child: Text(
+                'See all',
+                style: AppTextStyle.regular12(color: AppTheme.primarySwatch),
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: 20),
+
+      // Horizontal scroll
+      SizedBox(
+        height: 90,
+        child: Obx(() {
+          if (controller.loading.value) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final items = controller.doctorsMap.keys.toList();
+          if (items.isEmpty) return const SizedBox.shrink();
+
+          return ListView.separated(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            itemCount: items.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 10),
+            itemBuilder: (context, index) {
+              final category = items[index];
+              final assetPath = Datas.categoryAssets[category];
+
+              return GestureDetector(
+                onTap: () => RouteView.categoriesScreen.go(arguments: category),
+                child: Container(
+                  width: 70,
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        AppTheme.primarySwatch[400]!,
+                        AppTheme.primarySwatch[500]!,
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (assetPath != null)
+                        Image.asset(
+                          assetPath,
+                          width: 28,
+                          height: 28,
+                          color: AppColors.white, // remove if full-color icons
+                        )
+                      else
+                        const Icon(
+                          Icons.help_outline,
+                          color: Colors.white,
+                          size: 28,
+                        ),
+                      const SizedBox(height: 6),
+                      Text(
+                        category,
+                        textAlign: TextAlign.center,
+                        style: AppTextStyle.bold10(color: AppColors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        }),
+      ),
+    ],
+  );
+}
+
+//
+class DoctorDetailScreen extends StatelessWidget {
+  final Doctor doctor;
+
+  const DoctorDetailScreen({super.key, required this.doctor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(doctor.name ?? "Doctor Detail")),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.network(
+                  doctor.image ?? "",
+                  width: 120,
+                  height: 120,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              doctor.name ?? "No name",
+              style: AppTextStyle.bold18(color: AppColors.black),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              doctor.specialty ?? "No specialty",
+              style: AppTextStyle.regular14(color: AppColors.grey),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

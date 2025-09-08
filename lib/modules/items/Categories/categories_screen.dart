@@ -1,17 +1,26 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:medical_app/config/app_asset/app_assets.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
+import 'package:medical_app/modules/screen/controller/home/home_controller.dart';
+import 'package:medical_app/modules/screen/view/home_screen.dart';
 import 'package:medical_app/widgets/doctor_card_widget.dart';
 
-class CategoriesScreen extends StatelessWidget {
+class CategoriesScreen extends GetView<HomeController> {
   const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     const double expandedHeight = 170;
+
+    final String selectedSpecialty = Get.arguments ?? "All";
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -42,7 +51,7 @@ class CategoriesScreen extends StatelessWidget {
                     title: Transform.translate(
                       offset: Offset(0, titleOffset),
                       child: Text(
-                        'Specialties',
+                        selectedSpecialty,
                         style: AppTextStyle.bold18(color: AppColors.white),
                       ),
                     ),
@@ -68,7 +77,7 @@ class CategoriesScreen extends StatelessWidget {
                                   spacing: 10,
                                   children: [
                                     Text(
-                                      'Specialties',
+                                      selectedSpecialty,
                                       style: AppTextStyle.bold18(
                                         color: AppColors.white,
                                       ),
@@ -147,16 +156,38 @@ class CategoriesScreen extends StatelessWidget {
                 },
               ),
             ),
-            SliverToBoxAdapter(
-              child: DoctorCard(
-                imageUrl:
-                    'https://www.future-doctor.de/wp-content/uploads/2024/08/shutterstock_2480850611.jpg',
-                name: 'Dr. Jonh',
-                specialty: 'Teach',
-              ),
-            ),
+            SliverToBoxAdapter(child: _buildDoctorList(selectedSpecialty)),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildDoctorList(String category) {
+    final doctors = category == "All"
+        ? controller.allDoctors
+        : controller.doctorsMap[category] ?? [];
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      child: Column(
+        children: doctors.map((doc) {
+          return GestureDetector(
+            onTap: () {
+              // Navigate to DoctorDetailScreen
+              Get.to(() => DoctorDetailScreen(doctor: doc));
+            },
+            child: DoctorCard(
+              imageUrl: doc.image ?? '',
+              name: doc.name ?? '',
+              specialty: doc.specialty ?? '',
+              onInfoTap: () => print("Info tapped for ${doc.name}"),
+              onCalendarTap: () => print("Calendar tapped for ${doc.name}"),
+              onDetailsTap: () {}, // optional, since tap is on card
+              onFavoriteTap: () => print("Favorite tapped for ${doc.name}"),
+            ),
+          );
+        }).toList(),
       ),
     );
   }

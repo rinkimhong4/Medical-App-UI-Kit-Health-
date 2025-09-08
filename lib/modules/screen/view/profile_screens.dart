@@ -1,10 +1,10 @@
 import 'dart:io' show File;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medical_app/config/routes/app_routes.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
 import 'package:medical_app/modules/screen/controller/auth/auth_controller.dart';
 import 'package:medical_app/modules/screen/controller/profile_controller.dart';
-import 'package:medical_app/modules/screen/view/edit_profile_screen.dart';
 
 class ProfileScreens extends StatefulWidget {
   const ProfileScreens({super.key});
@@ -26,7 +26,33 @@ class _ProfileScreensState extends State<ProfileScreens> {
   }
 
   CustomScrollView _buildCustomScrollView() {
-    return CustomScrollView(slivers: [_buildBody]);
+    return CustomScrollView(slivers: [_buildAppBar, _buildBody]);
+  }
+
+  SliverAppBar get _buildAppBar {
+    return SliverAppBar(
+      backgroundColor: AppColors.white,
+      elevation: 0,
+      // pinned: true,
+      // floating: false,
+      centerTitle: true,
+      title: Text(
+        "Profile",
+        style: AppTextStyle.bold16(color: AppColors.black),
+      ),
+      // leading: IconButton(
+      //   icon: Icon(Icons.arrow_back, color: AppColors.black),
+      //   onPressed: () => Get.back(),
+      // ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.settings, color: AppColors.black),
+          onPressed: () {
+            RouteView.settingProfileScreen.go();
+          },
+        ),
+      ],
+    );
   }
 
   get _buildBody => SliverToBoxAdapter(
@@ -53,42 +79,42 @@ class _ProfileScreensState extends State<ProfileScreens> {
         'title': 'Profile',
         'icon': Icons.person,
         'onTap': () {
-          Get.to(() => EditProfileScreen());
+          RouteView.editprofile.go();
         },
       },
       {
         'title': 'Favorite',
         'icon': Icons.favorite,
         'onTap': () {
-          print('Navigate to Favorite');
+          // print('Navigate to Favorite');
         },
       },
       {
         'title': 'Payment Method',
         'icon': Icons.payment,
         'onTap': () {
-          print('Navigate to Payment Method');
+          // print('Navigate to Payment Method');
         },
       },
       {
         'title': 'Privacy Policy',
         'icon': Icons.lock,
         'onTap': () {
-          print('Navigate to Privacy Policy');
+          // print('Navigate to Privacy Policy');
         },
       },
       {
         'title': 'Settings',
         'icon': Icons.settings,
         'onTap': () {
-          print('Navigate to Settings');
+          // print('Navigate to Settings');
         },
       },
       {
         'title': 'Help',
         'icon': Icons.help,
         'onTap': () {
-          print('Navigate to Help');
+          // print('Navigate to Help');
         },
       },
       {

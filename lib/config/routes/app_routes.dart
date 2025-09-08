@@ -6,14 +6,22 @@ import 'package:get/get.dart';
 
 enum RouteView {
   home,
+
+  ///
   splash,
   onboarding,
+  settingProfileScreen,
+
+  ///
   signin,
   signup,
 
+  ///
   specialtiesScreen,
   specialtiesItems,
   categoriesScreen,
+  editprofile,
+  chnagePwd,
 }
 
 extension AppPages on RouteView {

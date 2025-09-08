@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:medical_app/config/routes/app_routes.dart';
-import 'package:medical_app/config/theme/theme_style.dart';
 import 'package:medical_app/modules/screen/controller/home/home_controller.dart';
 import 'package:medical_app/modules/screen/models/top_banner_models.dart';
 
@@ -26,7 +24,6 @@ class _TopBannerScreenState extends State<TopBannerScreen> {
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.sizeOf(context).height;
-    final double width = MediaQuery.sizeOf(context).width;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,76 +50,8 @@ class _TopBannerScreenState extends State<TopBannerScreen> {
         }),
 
         const SizedBox(height: 20),
+
         // Mini carousel (categories)
-        Padding(
-          padding: const EdgeInsets.only(left: 20.0, bottom: 10, right: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Categories',
-                style: AppTextStyle.bold16(color: AppColors.black),
-              ),
-              GestureDetector(
-                onTap: () => RouteView.categoriesScreen.go(),
-                child: Text(
-                  'See all',
-                  style: AppTextStyle.regular12(color: AppTheme.primarySwatch),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Obx(() {
-          if (homeController.loadingCategories.value) {
-            return SizedBox(
-              height: 70,
-              child: Center(child: CircularProgressIndicator()),
-            );
-          }
-          return Container(
-            height: 70,
-            width: width,
-            decoration: const BoxDecoration(color: Colors.transparent),
-            clipBehavior: Clip.none,
-            child: CarouselView.weighted(
-              flexWeights: const <int>[2, 3, 3, 3, 2],
-              consumeMaxWeight: false,
-              children: homeController.categories.map((category) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  decoration: BoxDecoration(
-                    color: AppTheme.secondarySwatch.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Image.asset(
-                            category.assetPath,
-                            color: AppTheme.primarySwatch[700],
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Expanded(
-                          child: Text(
-                            category.title,
-                            style: AppTextStyle.bold12(
-                              color: AppTheme.primarySwatch[700],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-          );
-        }),
       ],
     );
   }

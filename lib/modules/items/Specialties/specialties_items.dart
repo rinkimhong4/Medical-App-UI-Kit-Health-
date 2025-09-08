@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_app/config/app_asset/app_assets.dart';
@@ -249,16 +251,78 @@ class SpecialtiesItems extends GetView<HomeController> {
           Divider(color: AppTheme.primarySwatch[200], thickness: 1.5),
           Column(
             children: doctors.map((doc) {
-              return DoctorCard(
-                imageUrl: doc.image ?? '',
-                name: doc.name ?? '',
-                specialty: doc.specialty ?? '',
-                onInfoTap: () => print("Info tapped for ${doc.name}"),
-                onCalendarTap: () => print("Calendar tapped for ${doc.name}"),
-                onDetailsTap: () => print("Details tapped for ${doc.name}"),
-                onFavoriteTap: () => print("Favorite tapped for ${doc.name}"),
+              return GestureDetector(
+                onTap: () {
+                  // Navigate to Doctor Details screen on profile tap
+                  Get.to(
+                    () => DoctorDetailsScreen(
+                      name: doc.name ?? '',
+                      specialty: doc.specialty ?? '',
+                      image: doc.image ?? '',
+                    ),
+                  );
+                },
+                child: DoctorCard(
+                  imageUrl: doc.image ?? '',
+                  name: doc.name ?? '',
+                  specialty: doc.specialty ?? '',
+                  onInfoTap: () => print("Info tapped for ${doc.name}"),
+                  onCalendarTap: () => print("Calendar tapped for ${doc.name}"),
+                  onDetailsTap: () => print("Details tapped for ${doc.name}"),
+                  onFavoriteTap: () => print("Favorite tapped for ${doc.name}"),
+                ),
               );
             }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+// =
+
+class DoctorDetailsScreen extends StatelessWidget {
+  final String name;
+  final String specialty;
+  final String image;
+
+  const DoctorDetailsScreen({
+    super.key,
+    required this.name,
+    required this.specialty,
+    required this.image,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3, // Info, Reviews, Schedule
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppTheme.primarySwatch,
+          title: Text(name),
+        ),
+        body: TabBarView(children: [_buildInfoTab()]),
+      ),
+    );
+  }
+
+  Widget _buildInfoTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          CircleAvatar(backgroundImage: NetworkImage(image), radius: 50),
+          const SizedBox(height: 16),
+          Text(name, style: AppTextStyle.bold20()),
+          const SizedBox(height: 8),
+          Text(specialty, style: AppTextStyle.regular16()),
+          const SizedBox(height: 20),
+          Text('About Doctor', style: AppTextStyle.bold16()),
+          const SizedBox(height: 10),
+          Text(
+            'Dr. $name is an experienced $specialty specializing in patient care and medical excellence. You can see their reviews, available schedule, and more information here.',
+            style: AppTextStyle.regular14(),
           ),
         ],
       ),
