@@ -162,7 +162,11 @@ class _ProfileScreensState extends State<ProfileScreens> {
             item['title'],
             style: AppTextStyle.regular14(color: AppColors.black),
           ),
-          trailing: Icon(Icons.arrow_forward_ios, size: 18),
+          trailing: Icon(
+            Icons.arrow_forward_ios,
+            size: 18,
+            color: AppTheme.primarySwatch,
+          ),
           onTap: item['onTap'],
         );
       }).toList(),
@@ -257,7 +261,7 @@ class _ProfileScreensState extends State<ProfileScreens> {
                   height: 40,
                   width: 40,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    color: AppTheme.primarySwatch,
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: Theme.of(context).cardColor,

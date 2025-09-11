@@ -85,6 +85,13 @@ class AppRouting {
 
           // binding: OnboardingBinding(),
         );
+      case RouteView.notificationSettingScreen:
+        return GetPage(
+          name: "/${e.name}",
+          page: () => NotificationSettingScreen(),
+
+          // binding: OnboardingBinding(),
+        );
     }
   }).toList();
 }

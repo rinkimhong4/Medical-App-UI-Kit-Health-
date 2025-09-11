@@ -22,6 +22,9 @@ enum RouteView {
   categoriesScreen,
   editprofile,
   chnagePwd,
+
+  ///
+  notificationSettingScreen,
 }
 
 extension AppPages on RouteView {

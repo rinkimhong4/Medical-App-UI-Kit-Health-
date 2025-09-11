@@ -186,7 +186,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         width: 40,
         margin: EdgeInsets.only(top: 8),
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: AppTheme.primarySwatch,
           shape: BoxShape.circle,
           border: Border.all(color: Theme.of(context).cardColor, width: 2),
         ),
