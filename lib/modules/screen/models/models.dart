@@ -24,6 +24,7 @@ class SpecialtiesModel {
 
   Map<String, dynamic> toJson() => {"title": title, "image": image};
 }
+
 // ========
 // To parse this JSON data, do
 //
@@ -82,23 +83,73 @@ class DoctorsBySpecialtyModels {
       );
 }
 
+class DoctorModel {
+  final String name;
+  final String specialty;
+  final String image;
+  final String focus;
+  final String profile;
+  final String careerPath;
+  final String highlights;
+
+  DoctorModel({
+    required this.name,
+    required this.specialty,
+    required this.image,
+    required this.focus,
+    required this.profile,
+    required this.careerPath,
+    required this.highlights,
+  });
+
+  factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
+    name: json["name"] ?? "",
+    specialty: json["specialty"] ?? "",
+    image: json["image"] ?? "",
+    focus: json["focus"] ?? "",
+    profile: json["profile"] ?? "",
+    careerPath: json["careerPath"] ?? "",
+    highlights: json["highlights"] ?? "",
+  );
+}
+
 class Cardiology {
   String? name;
   String? specialty;
   String? image;
+  String? focus;
+  String? profile;
+  String? careerPath;
+  String? highlights;
 
-  Cardiology({this.name, this.specialty, this.image});
+  Cardiology({
+    this.name,
+    this.specialty,
+    this.image,
+    this.focus,
+    this.profile,
+    this.careerPath,
+    this.highlights,
+  });
 
   factory Cardiology.fromJson(Map<String, dynamic> json) => Cardiology(
     name: json["name"],
     specialty: json["specialty"],
     image: json["image"],
+    focus: json["focus"],
+    profile: json["profile"],
+    careerPath: json["careerPath"],
+    highlights: json["highlights"],
   );
 
   Map<String, dynamic> toJson() => {
     "name": name,
     "specialty": specialty,
     "image": image,
+    "focus": focus,
+    "profile": profile,
+    "careerPath": careerPath,
+    "highlights": highlights,
   };
 }
 

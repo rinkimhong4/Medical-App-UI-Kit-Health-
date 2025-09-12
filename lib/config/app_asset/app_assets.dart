@@ -84,4 +84,14 @@ class AppAssets {
   static const String search = 'assets/icons/search.png';
   static const String notification = 'assets/icons/notification.png';
   static const String setting = 'assets/icons/setting.png';
+  static const String call = 'assets/icons/call.png';
+  static const String instagram = 'assets/icons/instagram.png';
+  static const String headphone = 'assets/icons/headphone.png';
+  static const String web = 'assets/icons/web.png';
+
+  static const String lock = 'assets/icons/lock.png';
+  static const String help = 'assets/icons/help.png';
+  static const String logout = 'assets/icons/logout.png';
+  static const String payment = 'assets/icons/pay.png';
+  static const String key = 'assets/icons/pay.png';
 }

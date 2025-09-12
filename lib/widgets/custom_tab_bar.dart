@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
 
+///
+/// use
+//AnimatedRoundedTabbarFilled(
+//   tabs: ['FAQ', 'Contact Us'],
+//   tabContents: [
+//     Container(height: 100, color: Colors.amber),
+//     Container(height: 100, color: Colors.red),
+//   ],
+// ),
+
 class AnimatedRoundedTabbarFilled extends StatefulWidget {
   final double borderRadius;
   final List<String> tabs;
@@ -114,12 +124,16 @@ class _AnimatedRoundedTabbarFilledState
                 color: isActive || isHovered
                     ? widget.activeColor
                     : widget.inactiveColor,
+                border: isActive || isHovered
+                    ? null
+                    : Border.all(color: AppTheme.primarySwatch, width: 1.4),
               ),
+
               child: Text(
                 widget.tabs[index],
                 style: isActive || isHovered
                     ? (widget.activeTextStyle ??
-                          AppTextStyle.bold13(color: AppColors.black))
+                          AppTextStyle.bold13(color: AppColors.white))
                     : (widget.inactiveTextStyle ??
                           AppTextStyle.bold13(color: AppColors.black)),
               ),

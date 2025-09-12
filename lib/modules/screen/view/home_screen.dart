@@ -241,7 +241,6 @@ class HomeScreen extends GetView<HomeController> {
           }
           final items = controller.doctorsMap.keys.toList();
           if (items.isEmpty) return const SizedBox.shrink();
-
           return ListView.separated(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -275,7 +274,7 @@ class HomeScreen extends GetView<HomeController> {
                           assetPath,
                           width: 28,
                           height: 28,
-                          color: AppColors.white, // remove if full-color icons
+                          color: AppColors.white,
                         )
                       else
                         const Icon(
@@ -299,47 +298,4 @@ class HomeScreen extends GetView<HomeController> {
       ),
     ],
   );
-}
-
-//
-class DoctorDetailScreen extends StatelessWidget {
-  final Doctor doctor;
-
-  const DoctorDetailScreen({super.key, required this.doctor});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(doctor.name ?? "Doctor Detail")),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.network(
-                  doctor.image ?? "",
-                  width: 120,
-                  height: 120,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              doctor.name ?? "No name",
-              style: AppTextStyle.bold18(color: AppColors.black),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              doctor.specialty ?? "No specialty",
-              style: AppTextStyle.regular14(color: AppColors.grey),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

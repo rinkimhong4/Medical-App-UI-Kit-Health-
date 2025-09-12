@@ -7,6 +7,7 @@ import 'package:medical_app/modules/items/Specialties/specialties_items.dart';
 import 'package:medical_app/modules/items/Specialties/specialties_screen.dart';
 import 'package:medical_app/modules/items/profile/change_pwd.dart';
 import 'package:medical_app/modules/items/profile/edit_profile_screen.dart';
+import 'package:medical_app/modules/items/profile/help_center_items.dart';
 import 'package:medical_app/modules/items/profile/setting_profile_screen.dart';
 import 'package:medical_app/modules/screen/binding/home_binding.dart';
 import 'package:medical_app/modules/screen/view/start_screen/onboarding_page.dart';
@@ -90,6 +91,12 @@ class AppRouting {
           name: "/${e.name}",
           page: () => NotificationSettingScreen(),
 
+          // binding: OnboardingBinding(),
+        );
+      case RouteView.helpCenterItems:
+        return GetPage(
+          name: "/${e.name}",
+          page: () => HelpCenterItems(),
           // binding: OnboardingBinding(),
         );
     }

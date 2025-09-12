@@ -11,7 +11,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 Future<void> main() async {
   /// Initialize Flutter bindings
   WidgetsFlutterBinding.ensureInitialized();
-  LocalStorageService.instance.init();
+  await LocalStorageService.instance.init();
   await GetStorage.init();
 
   /// Load environment variables

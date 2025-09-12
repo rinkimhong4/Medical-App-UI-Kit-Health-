@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_app/config/app_asset/app_assets.dart';
@@ -259,6 +260,10 @@ class SpecialtiesItems extends GetView<HomeController> {
                       name: doc.name ?? '',
                       specialty: doc.specialty ?? '',
                       image: doc.image ?? '',
+                      focus: doc.focus ?? '',
+                      profile: doc.profile ?? '',
+                      highlights: doc.highlights ?? '',
+                      careerPath: doc.careerPath ?? '',
                     ),
                   );
                 },
@@ -279,50 +284,166 @@ class SpecialtiesItems extends GetView<HomeController> {
     );
   }
 }
-// =
 
+// =======================
 class DoctorDetailsScreen extends StatelessWidget {
   final String name;
   final String specialty;
   final String image;
+  final String focus;
+  final String profile;
+  final String careerPath;
+  final String highlights;
 
   const DoctorDetailsScreen({
     super.key,
     required this.name,
     required this.specialty,
     required this.image,
+    required this.focus,
+    required this.profile,
+    required this.careerPath,
+    required this.highlights,
   });
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3, // Info, Reviews, Schedule
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppTheme.primarySwatch,
-          title: Text(name),
-        ),
-        body: TabBarView(children: [_buildInfoTab()]),
-      ),
-    );
-  }
+    const double expandedHeight = 170;
 
-  Widget _buildInfoTab() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          CircleAvatar(backgroundImage: NetworkImage(image), radius: 50),
-          const SizedBox(height: 16),
-          Text(name, style: AppTextStyle.bold20()),
-          const SizedBox(height: 8),
-          Text(specialty, style: AppTextStyle.regular16()),
-          const SizedBox(height: 20),
-          Text('About Doctor', style: AppTextStyle.bold16()),
-          const SizedBox(height: 10),
-          Text(
-            'Dr. $name is an experienced $specialty specializing in patient care and medical excellence. You can see their reviews, available schedule, and more information here.',
-            style: AppTextStyle.regular14(),
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: expandedHeight,
+            backgroundColor: AppTheme.primarySwatch,
+            elevation: 5,
+            flexibleSpace: LayoutBuilder(
+              builder: (context, constraints) {
+                final maxHeight = constraints.maxHeight;
+                final minHeight =
+                    kToolbarHeight + MediaQuery.of(context).padding.top;
+
+                final t =
+                    ((maxHeight - minHeight) / (expandedHeight - minHeight))
+                        .clamp(0.0, 1.0);
+
+                final titleOffset = 25 * t;
+
+                return FlexibleSpaceBar(
+                  collapseMode: CollapseMode.pin,
+                  titlePadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 5,
+                  ),
+                  title: Transform.translate(
+                    offset: Offset(0, titleOffset),
+                    child: Text(
+                      name,
+                      style: AppTextStyle.bold18(color: AppColors.white),
+                    ),
+                  ),
+                  background: Container(
+                    padding: const EdgeInsets.only(
+                      bottom: 16,
+                      left: 16,
+                      right: 16,
+                    ),
+                    alignment: Alignment.bottomCenter,
+                    child: Opacity(
+                      opacity: t,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: CachedNetworkImageProvider(image),
+                            radius: 40,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            specialty,
+                            style: AppTextStyle.regular14(
+                              color: AppColors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
+          // Page content
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (focus.isNotEmpty) ...[
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.only(bottom: 30),
+                      decoration: BoxDecoration(
+                        color: AppTheme.primarySwatch.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Focus:",
+                            style: AppTextStyle.bold16(
+                              color: AppTheme.primarySwatch,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            focus,
+                            style: AppTextStyle.regular14(
+                              color: AppColors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+
+                  Text(
+                    "About Doctor",
+                    style: AppTextStyle.bold16(color: AppColors.black),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    profile,
+                    style: AppTextStyle.regular14(color: AppColors.black),
+                  ),
+                  SizedBox(height: 30),
+                  Text(
+                    "Career Path",
+                    style: AppTextStyle.bold16(color: AppColors.black),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    careerPath,
+                    style: AppTextStyle.regular14(color: AppColors.black),
+                  ),
+                  SizedBox(height: 30),
+                  Text(
+                    "Highlights",
+                    style: AppTextStyle.bold16(color: AppColors.black),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    highlights,
+                    style: AppTextStyle.regular14(color: AppColors.black),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

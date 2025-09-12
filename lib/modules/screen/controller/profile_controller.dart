@@ -42,6 +42,32 @@ class ProfileController extends GetxController {
     }
   }
 
+  Future<void> deleteAccount() async {
+    try {
+      final userId = _supabase.auth.currentUser?.id;
+      if (userId == null) return;
+
+      // Show loading
+      isLoading.value = true;
+
+      // 1. Delete user data from tables
+      await _supabase.from('profiles').delete().eq('id', userId);
+      await _supabase.from('posts').delete().eq('user_id', userId);
+
+      // 2. Sign out user
+      await _supabase.auth.signOut();
+
+      // 3. Navigate to login screen
+      Get.offAllNamed('/login'); // or your login route
+
+      Get.snackbar('Success', 'Account deleted successfully');
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to delete account: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   Future<void> uploadProfileImage(String userId) async {
     if (userId.isEmpty) return;
 

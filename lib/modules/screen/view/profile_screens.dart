@@ -1,8 +1,10 @@
 import 'dart:io' show File;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medical_app/config/app_asset/app_assets.dart';
 import 'package:medical_app/config/routes/app_routes.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
+import 'package:medical_app/modules/items/profile/privacy_policy_items.dart';
 import 'package:medical_app/modules/screen/controller/auth/auth_controller.dart';
 import 'package:medical_app/modules/screen/controller/profile_controller.dart';
 
@@ -77,70 +79,150 @@ class _ProfileScreensState extends State<ProfileScreens> {
     List<Map<String, dynamic>> listData = [
       {
         'title': 'Profile',
-        'icon': Icons.person,
+        'icon': AppAssets.profileOutline,
         'onTap': () {
           RouteView.editprofile.go();
         },
       },
       {
         'title': 'Favorite',
-        'icon': Icons.favorite,
+        'icon': AppAssets.favorite,
         'onTap': () {
           // print('Navigate to Favorite');
         },
       },
       {
         'title': 'Payment Method',
-        'icon': Icons.payment,
+        'icon': AppAssets.payment,
         'onTap': () {
           // print('Navigate to Payment Method');
         },
       },
       {
         'title': 'Privacy Policy',
-        'icon': Icons.lock,
+        'icon': AppAssets.lock,
         'onTap': () {
-          // print('Navigate to Privacy Policy');
+          Get.to(() => PrivacyPolicyItems());
         },
       },
       {
         'title': 'Settings',
-        'icon': Icons.settings,
+        'icon': AppAssets.setting,
         'onTap': () {
           // print('Navigate to Settings');
         },
       },
       {
-        'title': 'Help',
-        'icon': Icons.help,
+        'title': 'Help Center',
+        'icon': AppAssets.help,
         'onTap': () {
-          // print('Navigate to Help');
+          RouteView.helpCenterItems.go();
         },
       },
       {
         'title': 'Logout',
-        'icon': Icons.logout,
+        'icon': AppAssets.logout,
         'onTap': () {
-          // Show confirmation dialog
-          showDialog(
+          showModalBottomSheet(
             context: Get.context!,
-            builder: (context) => AlertDialog(
-              title: Text('Confirm Logout'),
-              content: Text('Are you sure you want to logout?'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text('No'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    authController.signOut();
-                  },
-                  child: Text('Yes'),
-                ),
-              ],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
+            backgroundColor: Colors.white,
+            builder: (context) {
+              return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Confirm Logout',
+                      style: AppTextStyle.bold16(color: AppColors.black),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Are you sure you want to logout?',
+                      style: AppTextStyle.medium18(color: AppColors.black),
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // No button with gradient
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1.3,
+                              color: AppTheme.primarySwatch,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(8),
+                              onTap: () => Navigator.of(context).pop(),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal: 40,
+                                ),
+                                child: Text(
+                                  'No',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+
+                        // Yes button with gradient
+                        Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                AppTheme.secondarySwatch,
+                                AppTheme.primarySwatch,
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(8),
+                              onTap: () {
+                                Navigator.of(context).pop();
+                                authController.signOut();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal: 40,
+                                ),
+                                child: Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
           );
         },
       },
@@ -153,10 +235,17 @@ class _ProfileScreensState extends State<ProfileScreens> {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  AppTheme.secondarySwatch[400]!,
+                  AppTheme.primarySwatch[500]!,
+                ],
+              ),
               shape: BoxShape.circle,
-              color: AppTheme.secondarySwatch,
             ),
-            child: Icon(item['icon'], color: Colors.white),
+            child: Image.asset(item['icon'], color: AppColors.white),
           ),
           title: Text(
             item['title'],
