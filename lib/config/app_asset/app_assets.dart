@@ -94,4 +94,6 @@ class AppAssets {
   static const String logout = 'assets/icons/logout.png';
   static const String payment = 'assets/icons/pay.png';
   static const String key = 'assets/icons/pay.png';
+  static const String chat = 'assets/icons/chat.png';
+  static const String video = 'assets/icons/video.png';
 }

@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_app/config/app_asset/app_assets.dart';
 import 'package:medical_app/config/theme/theme_style.dart';
-import 'package:medical_app/modules/items/Specialties/specialties_items.dart';
+import 'package:medical_app/modules/items/doctor_details_screen.dart';
 import 'package:medical_app/modules/screen/controller/home/home_controller.dart';
+import 'package:medical_app/modules/screen/models/models.dart';
 import 'package:medical_app/widgets/doctor_card_widget.dart';
 
 class CategoriesScreen extends GetView<HomeController> {
@@ -33,7 +34,6 @@ class CategoriesScreen extends GetView<HomeController> {
                   final maxHeight = constraints.maxHeight;
                   final minHeight =
                       kToolbarHeight + MediaQuery.of(context).padding.top;
-
                   // Scroll factor: 0 = fully collapsed, 1 = fully expanded
                   final t =
                       ((maxHeight - minHeight) / (expandedHeight - minHeight))
@@ -164,9 +164,9 @@ class CategoriesScreen extends GetView<HomeController> {
   }
 
   Widget _buildDoctorList(String category) {
-    final doctors = category == "All"
+    final List<Doctor> doctors = category == "All"
         ? controller.allDoctors
-        : controller.doctorsMap[category] ?? [];
+        : (controller.doctorsMap[category] ?? []);
 
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -174,16 +174,15 @@ class CategoriesScreen extends GetView<HomeController> {
         children: doctors.map((doc) {
           return GestureDetector(
             onTap: () {
-              // Navigate to DoctorDetailScreen
               Get.to(
                 () => DoctorDetailsScreen(
                   name: doc.name ?? '',
                   specialty: doc.specialty ?? '',
                   image: doc.image ?? '',
-                  focus: '',
-                  profile: '',
-                  careerPath: '',
-                  highlights: '',
+                  focus: doc.focus ?? '',
+                  profile: doc.profile ?? '',
+                  highlights: doc.highlights ?? '',
+                  careerPath: doc.careerPath ?? '',
                 ),
               );
             },
@@ -193,7 +192,7 @@ class CategoriesScreen extends GetView<HomeController> {
               specialty: doc.specialty ?? '',
               onInfoTap: () => print("Info tapped for ${doc.name}"),
               onCalendarTap: () => print("Calendar tapped for ${doc.name}"),
-              onDetailsTap: () {}, // optional, since tap is on card
+              onDetailsTap: () {}, // optional
               onFavoriteTap: () => print("Favorite tapped for ${doc.name}"),
             ),
           );

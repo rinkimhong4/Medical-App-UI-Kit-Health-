@@ -10,6 +10,8 @@ class DoctorCard extends StatelessWidget {
   final VoidCallback? onCalendarTap;
   final VoidCallback? onDetailsTap;
   final VoidCallback? onFavoriteTap;
+  final IconData? professionalDocIcon;
+  final String? professionalDocTitle;
 
   const DoctorCard({
     super.key,
@@ -20,6 +22,8 @@ class DoctorCard extends StatelessWidget {
     this.onCalendarTap,
     this.onDetailsTap,
     this.onFavoriteTap,
+    this.professionalDocIcon,
+    this.professionalDocTitle,
   });
 
   @override
@@ -42,6 +46,24 @@ class DoctorCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (professionalDocIcon != null &&
+                      professionalDocTitle != null)
+                    Row(
+                      spacing: 4,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          professionalDocIcon,
+                          size: 16,
+                          color: AppTheme.primarySwatch,
+                        ),
+                        Text(
+                          professionalDocTitle!,
+                          style: AppTextStyle.regular12(color: AppColors.black),
+                        ),
+                      ],
+                    ),
+                  SizedBox(height: 4),
                   Text(
                     name,
                     style: AppTextStyle.bold16(color: AppColors.black),

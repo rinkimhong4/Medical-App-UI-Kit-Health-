@@ -10,7 +10,6 @@ import 'package:medical_app/core/data/data.dart';
 import 'package:medical_app/modules/screen/controller/auth/auth_controller.dart';
 import 'package:medical_app/modules/screen/controller/home/home_controller.dart';
 import 'package:medical_app/modules/screen/controller/profile_controller.dart';
-import 'package:medical_app/modules/screen/models/models.dart';
 import 'package:medical_app/widgets/hero_layout_card_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -230,26 +229,24 @@ class HomeScreen extends GetView<HomeController> {
           ],
         ),
       ),
-      const SizedBox(height: 20),
-
+      SizedBox(height: 20),
       // Horizontal scroll
       SizedBox(
         height: 90,
         child: Obx(() {
           if (controller.loading.value) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
           final items = controller.doctorsMap.keys.toList();
-          if (items.isEmpty) return const SizedBox.shrink();
+          if (items.isEmpty) return SizedBox.shrink();
           return ListView.separated(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 20),
             itemCount: items.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 10),
+            separatorBuilder: (_, __) => SizedBox(width: 10),
             itemBuilder: (context, index) {
               final category = items[index];
               final assetPath = Datas.categoryAssets[category];
-
               return GestureDetector(
                 onTap: () => RouteView.categoriesScreen.go(arguments: category),
                 child: Container(
@@ -282,7 +279,7 @@ class HomeScreen extends GetView<HomeController> {
                           color: Colors.white,
                           size: 28,
                         ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       Text(
                         category,
                         textAlign: TextAlign.center,

@@ -34,6 +34,7 @@ dependencies:
   flutter_cache_manager: ^3.4.1
   flutter_advanced_switch: ^3.1.0
   url_launcher: ^6.3.0
+  gap: ^3.0.1
 
 dev_dependencies:
   flutter_test:

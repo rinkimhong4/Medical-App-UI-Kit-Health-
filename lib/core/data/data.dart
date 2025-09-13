@@ -184,6 +184,14 @@ class Datas {
         "specialty": "Interventional Cardiologist",
         "image":
             "https://www.future-doctor.de/wp-content/uploads/2024/08/shutterstock_2480850611.jpg",
+        "focus":
+            "The impact of hormonal imbalances on skin conditions, specializing in acne, hirsutism, and other skin disorders.",
+        "profile":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "careerPath":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "highlights":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       },
     ],
     "Doctors": [
@@ -192,6 +200,14 @@ class Datas {
         "specialty": "Dermatologist",
         "image":
             "https://img.freepik.com/free-photo/portrait-young-female-doctor_23-2148827698.jpg",
+        "focus":
+            "The impact of hormonal imbalances on skin conditions, specializing in acne, hirsutism, and other skin disorders.",
+        "profile":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "careerPath":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "highlights":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       },
     ],
     "Pharmacy": [
@@ -200,6 +216,14 @@ class Datas {
         "specialty": "Dermatologist",
         "image":
             "https://img.freepik.com/free-photo/portrait-young-female-doctor_23-2148827698.jpg",
+        "focus":
+            "The impact of hormonal imbalances on skin conditions, specializing in acne, hirsutism, and other skin disorders.",
+        "profile":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "careerPath":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "highlights":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       },
     ],
     "Specialties": [
@@ -208,6 +232,15 @@ class Datas {
         "specialty": "Dermatologist",
         "image":
             "https://img.freepik.com/free-photo/portrait-young-female-doctor_23-2148827698.jpg",
+
+        "focus":
+            "The impact of hormonal imbalances on skin conditions, specializing in acne, hirsutism, and other skin disorders.",
+        "profile":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "careerPath":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "highlights":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       },
     ],
     "record": [
@@ -216,6 +249,14 @@ class Datas {
         "specialty": "Dermatologist",
         "image":
             "https://img.freepik.com/free-photo/portrait-young-female-doctor_23-2148827698.jpg",
+        "focus":
+            "The impact of hormonal imbalances on skin conditions, specializing in acne, hirsutism, and other skin disorders.",
+        "profile":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "careerPath":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "highlights":
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       },
     ],
   };

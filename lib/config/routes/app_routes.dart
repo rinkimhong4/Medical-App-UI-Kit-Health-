@@ -26,6 +26,8 @@ enum RouteView {
   ///
   notificationSettingScreen,
   helpCenterItems,
+  ratingScreenItems,
+  favoriteScreenItems,
 }
 
 extension AppPages on RouteView {

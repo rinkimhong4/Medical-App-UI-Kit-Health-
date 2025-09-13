@@ -141,16 +141,6 @@ class Cardiology {
     careerPath: json["careerPath"],
     highlights: json["highlights"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "name": name,
-    "specialty": specialty,
-    "image": image,
-    "focus": focus,
-    "profile": profile,
-    "careerPath": careerPath,
-    "highlights": highlights,
-  };
 }
 
 List<ListTitleModel> listTitleModelFromJson(String str) =>
@@ -216,18 +206,28 @@ class Doctor {
   String? name;
   String? specialty;
   String? image;
+  String? focus;
+  String? profile;
+  String? careerPath;
+  String? highlights;
 
-  Doctor({this.name, this.specialty, this.image});
+  Doctor({
+    this.name,
+    this.specialty,
+    this.image,
+    this.focus,
+    this.profile,
+    this.careerPath,
+    this.highlights,
+  });
 
   factory Doctor.fromJson(Map<String, dynamic> json) => Doctor(
     name: json["name"],
     specialty: json["specialty"],
     image: json["image"],
+    focus: json["focus"],
+    profile: json["profile"],
+    careerPath: json["careerPath"],
+    highlights: json["highlights"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "name": name,
-    "specialty": specialty,
-    "image": image,
-  };
 }
