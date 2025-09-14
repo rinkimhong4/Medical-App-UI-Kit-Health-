@@ -3,6 +3,8 @@
 A comprehensive Flutter-based healthcare application that connects patients with medical professionals and provides easy access to medical specialties, doctor profiles, and healthcare services.
 
 ## 📱 Features
+## email: rinkimhong4@gmail.com
+## Pwd: Hong@@11
 
 ### 🔐 Authentication & User Management
 
